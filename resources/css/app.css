@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* para table */
+[x-cloak] { display: none !important; }
+
+/* funciona como h-screen pero tiene en cuenta
+* el tamaño del navigation menu de jetstream
+*/
+.h-jet-screen {
+    height: calc(100vh - 5rem) !important;
+}
