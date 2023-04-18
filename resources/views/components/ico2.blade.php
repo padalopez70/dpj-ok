@@ -1,8 +1,9 @@
 @props([
     'name' => 'vacio',
+    'stroke' => '1.5'
 ])
 
-<svg insu="" xmlns="http://www.w3.org/2000/svg" {!! $attributes->merge(["class" => "w-6 h-6"]) !!} fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+<svg insu="" xmlns="http://www.w3.org/2000/svg" {!! $attributes->merge(["class" => "w-6 h-6"]) !!} fill="none" viewBox="0 0 24 24" stroke-width="{{$stroke}}" stroke="currentColor">
 @switch($name)
 
 @case('vacio')
@@ -1191,6 +1192,6 @@
 
 @default
 </svg>
-<strong class="bg-yellow-300 p-2">ER</strong>
+<strong class="p-2 bg-yellow-300">ER</strong>
 @endswitch
 </svg>

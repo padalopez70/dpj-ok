@@ -14,9 +14,7 @@
 
 ### para produccion:
 
-chown -R www-data.www-data /var/www/html
-
-composer.phar install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
 npm install
 
@@ -27,3 +25,4 @@ php artisan storage:link
 php artisan optimize:clear
 
 
+chown -R www-data.www-data /var/www/html

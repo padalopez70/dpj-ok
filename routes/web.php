@@ -60,8 +60,8 @@ Route::middleware([
      Route::group(['middleware' => ['PERMISOS:1']], function () {
 
         //Novedades
-        Route::get('/documentos/{id}', Documentos::class)->name('sis.documentos.index');
         Route::get('/documentos/crear/{id}', DocumentoForm::class)->name('sis.documentos.create');
+        Route::get('/documentos/{id}', Documentos::class)->name('sis.documentos.index');
 
         //Route::get('/documentos/editar/{id}', DocumentoForm::class)->name('sis.documentos.edit');
 
@@ -120,7 +120,7 @@ Route::middleware([
         Route::get('/abm/ejemplo/editar/{ejemplo}', EjemploForm::class)->name('abm-ejemplo.ejemplo.edit');
 
             //Novedades
-            Route::get('/documentos/{id}', Documentos::class)->name('sis.documentos.index');
+            //Route::get('/documentos/{id}', Documentos::class)->name('sis.documentos.index');
             //Route::get('/documentos/crear/{id}', DocumentoForm::class)->name('sis.documentos.create');
 
             //Route::get('/documentos/editar/{id}', DocumentoForm::class)->name('sis.documentos.edit');

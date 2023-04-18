@@ -16,8 +16,8 @@ class Novedad extends Model
         return $this->belongsTo(TipoNovedad::class, 'id_tipo_entidad');
     }
 
-    public function entidades(){
-        return $this->hasMany(Entidad::class, 'id');
+    public function Entidades(){
+        return $this->hasMany(Entidad::class);
     }
 
 }

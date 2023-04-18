@@ -1,5 +1,11 @@
 <div>
 
+    <div class="container bg-dark text-white p-2" titulo="Documentos vinculados al expediente: {{$fila['expediente']}}">
+        Documentos vinculados al expediente:<h3> {{$fila['numero']}}-{{$fila['codigo']}}-{{$fila['anio']}}</h3>
+        Entidad:<h4>{{$nombre_entidad}}</h4>
+    </div>
+
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">Vincular documento a expediente</h2>
     </x-slot>
@@ -31,16 +37,32 @@
                         <x-jet-input-error for="noticia.tipo" />
                     </div>
                     --}}
-                    <div class="col-span-6">
+{{--                     <div class="col-span-6">
                         <x-jet-label for="titulo" value="" />
                         <x-jet-input wire:model.defer='archivo' class="mt-5" type="file" name="archivo" id="archivo"
                             class="w-full block" />
                         <x-jet-input-error for="archivo" />
+                    </div> --}}
+                    <div class="col-span-6">
+                        <x-jet-label for="archivo" value="Documento * (PDF,JPG, PNG. max. 2MB)" />
+                        <div class="flex space-x-1">
+                            <div class="w-full">
+                                <x-upload-form archivo="archivo">
+                                    <slot>
+                                        <x-ico2 name="arrow-up-tray"/>
+                                        <div class="pl-1 whitespace-nowrap">Seleccionar archivo</div>
+                                    </slot>
+                                </x-upload-form>
+                            </div>
+                        </div>
+                        <x-jet-input-error for="archivo" />
                     </div>
+
                     <div class="col">
                         <x-jet-input wire:model.defer='documento.comentario' placeholder="Ingrese un comentario" type="text" class="text-dark" name="comentario" id="comentario"/>
                         <x-jet-input-error for="documento.comentario" />
                     </div>
+
 
 {{--                     <div class="col-span-6">
                         <x-jet-label for="titulo" value="Nombre del Tipo de Entidad *" />

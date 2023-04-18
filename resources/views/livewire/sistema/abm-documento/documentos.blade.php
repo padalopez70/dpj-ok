@@ -5,17 +5,14 @@
         {{-- <x-button><a href="{{ route('sis.documentos.create', $id_novedad) }}">Crear</a></x-button>
  --}}
 
-        <slot>
 
          <livewire:sistema.abm-documento.documento-form :id_novedad="$id_novedad"/>
 
-        </slot>
 
    {{--  </x-slot> --}}
 
-    </slot>
         <livewire:sistema.abm-documento.documentos-tabla exportable :id_novedad="$id_novedad"/>
-    </slot>
+
 
 </div>
 

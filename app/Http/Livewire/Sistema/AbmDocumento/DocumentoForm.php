@@ -18,8 +18,7 @@ class DocumentoForm extends Component
 {
 
     use WithFileUploads;
-    public Documento $documento;
-    public Novedad $fila;
+        //public Novedad $fila;
     public $id_novedad;
     protected $listeners = ['RefrescarDocumentos' =>' render'];
     //public $path=[];
@@ -27,6 +26,8 @@ class DocumentoForm extends Component
     public $nombre_entidad="";
     public $path;
     public $archivo;
+    public $documento;
+    public $fila;
 
     public function render()
     {
@@ -34,17 +35,17 @@ class DocumentoForm extends Component
         return view('livewire.sistema.abm-documento.documento-form');
     }
 
-    public function mount(Documento $documento)
+    public function mount()
     {
+        $this->documento= new Documento;
+        //$this->id_novedad = request('id');
 
-        $this->id_novedad = request('id');
-        $this->documento = $documento;
-/*
         $this->fila=Novedad::where('novedades.id', $this->id_novedad)
         ->leftJoin('entidades AS u', 'u.id', 'novedades.id_entidad')
-        ->first();
-        $this->nombre_entidad = $this->fila->denominacion;
-*/
+        ->first()->toArray();
+        $this->nombre_entidad = $this->fila['denominacion'];
+
+
         $this->path = Route::currentRouteName();
         $this->view = 'sis.novedades.index';
     }
@@ -75,18 +76,18 @@ class DocumentoForm extends Component
     protected $validationAttributes = [
     ];
 
-    public function updated($propertyName)
+/*     public function updated($propertyName)
     {
         //funcion para ver en tiempo real si algo es actualizado, ej:
         //$this->validateOnly($propertyName);
-    }
+    } */
 
     public function guardar()
     {
 
 
-        $this->validate();
         //dd('hola');
+        $this->validate();
         //$this->path->store('docs');
         $archivo = $this->archivo->storePublicly('public/docs/'.$this->id_novedad.'/');
         $archivo_hash = pathinfo($this->archivo->hashName(), PATHINFO_FILENAME).".".$this->archivo->extension();

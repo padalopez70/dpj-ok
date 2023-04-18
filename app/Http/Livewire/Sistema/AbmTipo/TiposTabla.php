@@ -19,6 +19,7 @@ class TiposTabla extends LivewireDatatable
 
     public $filaNum;
     public $data;
+    public $tipoId;
 
     public $tagTipo = [
         ['value' => "INFO", 'bg' => 'bg-sky-600'],
@@ -114,7 +115,7 @@ class TiposTabla extends LivewireDatatable
 
     public function confirmarEliminacion($id)
     {
-        $this->tipodId = $id;
+        $this->tipoId = $id;
         $this->dispatchBrowserEvent('eliminar', [
             'objeto' => 'tipo',
             'emit' => 'tipoEliminar'
@@ -129,6 +130,7 @@ class TiposTabla extends LivewireDatatable
 
             $this->dispatchBrowserEvent('eliminado');
         } catch (Exception $e) {
+            dump($e);
             $this->dispatchBrowserEvent('egral', ['errorNro' => $e->getCode()]);
         }
     }
