@@ -14,7 +14,7 @@ class Documentos extends Component
     public $archivo;
     public function mount()
     {
-        $this->id_novedad = 14;
+        $this->id_novedad = request('id');
 
     }
 

@@ -8,6 +8,7 @@ use App\Models\Entidad;
 use App\Models\TipoNovedad;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 
@@ -15,6 +16,7 @@ class NovedadForm extends Component
 {
 
     public Novedad $novedad;
+    public $puedo_cambiar_entidad="";
 
 
     public function render()
@@ -29,6 +31,11 @@ class NovedadForm extends Component
         $this->entidades=Entidad::get()->toArray();
         $this->tipos_novedades=TipoNovedad::get()->toArray();
 
+        //if($this->novedad->id!= null) $this->puedo_cambiar_entidad=" disabled: true, "; else $this->puedo_cambiar_entidad=" disabled=false, ";
+        if($this->novedad->id== null) $this->puedo_cambiar_entidad="si"; else $this->puedo_cambiar_entidad="no";
+
+        // dd($puedo_cambiar_entidad);
+        //dd($this->novedad->id);
         //para mostrar simple-select va con toArray();
         //$this->tipos = ['INFO','EXITO','ALARMA','GENERAL'];
 
@@ -86,7 +93,8 @@ class NovedadForm extends Component
 
         try {
 
-            //$this->noticia->user_id = Auth::user()->id;
+            DB::beginTransaction();
+            $this->novedad->user_id = Auth::user()->id;
             $this->novedad->novedad_descripcion;
             $this->novedad->id_entidad;
             $this->novedad->id_tipo_novedad;
@@ -109,10 +117,12 @@ class NovedadForm extends Component
                 //$this->limpiarForm();
                 $this->redirectRoute($this->view);
             }
+            DB::commit();
 
         } catch (Exception $e) {
             dump ($e);
             $this->dispatchBrowserEvent('egral', ['errorNro' => $e->getCode()]);
+            DB::rollBack();
         }
     }
 }

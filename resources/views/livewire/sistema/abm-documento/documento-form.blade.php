@@ -1,13 +1,21 @@
 <div>
 
     <div class="container bg-dark text-white p-2" titulo="Documentos vinculados al expediente: {{$fila['expediente']}}">
-        Documentos vinculados al expediente:<h3> {{$fila['numero']}}-{{$fila['codigo']}}-{{$fila['anio']}}</h3>
-        Entidad:<h4>{{$nombre_entidad}}</h4>
+        <h5> Documentos vinculados al expediente: <b> {{$fila['numero']}}-{{$fila['codigo']}}-{{$fila['anio']}}</b></h5>
+        <h5>Entidad: <b>{{$nombre_entidad}}</b></h5>
     </div>
 
 
     <x-slot name="header">
+
+        <div class="col-span-6 relative">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">Vincular documento a expediente</h2>
+
+            <a href="{{route($view)}}">
+                <x-ico2s name="backward" style="top: -5px;" class="h-10 w-10 mt-0 absolute right-0 fill-sky-300" />
+            </a>
+
+
     </x-slot>
 
     <div>
@@ -22,11 +30,7 @@
                 </x-slot>
                 <x-slot name="form">
 
-                    <div class="col-span-6 relative">
-                        <a href="{{route($view)}}">
-                            <x-ico2s name="backward" class="h-10 w-10 absolute right-0 fill-sky-300" />
-                        </a>
-                    </div>
+
                      {{--
                     <div class="col-span-6">
 
@@ -58,8 +62,9 @@
                         <x-jet-input-error for="archivo" />
                     </div>
 
-                    <div class="col">
-                        <x-jet-input wire:model.defer='documento.comentario' placeholder="Ingrese un comentario" type="text" class="text-dark" name="comentario" id="comentario"/>
+                    <div class="col-span-6">
+                        <x-jet-label for="archivo" value="Comentario" />
+                        <x-jet-input wire:model.defer='documento.comentario' placeholder="Ingrese un comentario" type="text" class="text-dark w-full block" name="comentario" id="comentario"/>
                         <x-jet-input-error for="documento.comentario" />
                     </div>
 

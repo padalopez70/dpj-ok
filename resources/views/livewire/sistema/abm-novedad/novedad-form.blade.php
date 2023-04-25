@@ -46,13 +46,31 @@
                             </ul>
                         </div>
 
-                         <x-simple-select wire:model.defer="novedad.id_entidad"
-                             name="id_entidad"
-                             id="id_entidad"
-                             :options="$entidades"
-                             placeholder="Seleccionar Entidad" :searchable='true' value-field='id' text-field='denominacion'
-                             class="form-select" />
-                         <x-jet-input-error for="novedad.id_entidad" />
+                        @if($puedo_cambiar_entidad=="si")
+                                <x-simple-select wire:model.defer="novedad.id_entidad"
+                                    name="id_entidad"
+                                    id="id_entidad"
+                                    :options="$entidades"
+                                    placeholder="Seleccionar Entidad"
+                                    :searchable='true'
+                                    value-field='id'
+                                    text-field='denominacion'
+                                    class="form-select"
+                                    />
+                        @else
+                                <x-simple-select wire:model.defer="novedad.id_entidad"
+                                name="id_entidad"
+                                id="id_entidad"
+                                :options="$entidades"
+                                placeholder="Seleccionar Entidad"
+                                :searchable='true'
+                                value-field='id'
+                                text-field='denominacion'
+                                class="form-select"
+                                disabled
+                                />
+                        @endif
+                             <x-jet-input-error for="novedad.id_entidad" />
 
                      </div>
 
@@ -83,7 +101,9 @@
                              id="id_tipo_novedad"
                              :options="$tipos_novedades"
                              placeholder="Seleccionar tipo de novedad" :searchable='true' value-field='id' text-field='novedad_denominacion'
-                             class="form-select" />
+                             class="form-select"
+
+                             />
                          <x-jet-input-error for="novedad.id_tipo_novedad" />
                      </div>
 

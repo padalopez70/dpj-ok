@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Sistema\AbmEntidad;
 
+
 use App\Models\Departamento;
 use App\Models\Entidad;
 use App\Models\Estado;
@@ -118,6 +119,7 @@ class EntidadForm extends Component
             //dump($this->id_departamento,$this->id_localidad);
 
             $this->entidad->save();
+
 
             $this->dispatchBrowserEvent('guardado');
 

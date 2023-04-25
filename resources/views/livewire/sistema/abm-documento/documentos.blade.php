@@ -11,7 +11,7 @@
 
    {{--  </x-slot> --}}
 
-        <livewire:sistema.abm-documento.documentos-tabla exportable :id_novedad="$id_novedad"/>
+        <livewire:sistema.abm-documento.documentos-tabla  :id_novedad="$id_novedad"/>
 
 
 </div>

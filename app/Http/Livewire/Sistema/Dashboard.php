@@ -17,8 +17,8 @@ class Dashboard extends Component
 
     public function render()
     {
-        //return view('livewire.sistema.dashboard');
-        return view('livewire.sistema.abm-entidad.entidades');
+        return view('livewire.sistema.inicio');
+       // return view('livewire.sistema.abm-entidad.entidades');
     }
 
     public function mount()

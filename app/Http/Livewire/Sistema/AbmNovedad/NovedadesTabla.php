@@ -16,7 +16,7 @@ class NovedadesTabla extends LivewireDatatable
 
     //public $model = Producto::class;
     //public $hideable = 'select';
-    //public $exportable = true;
+    public $exportable = true;
     //public $sorteable = true;
 
     public $filaNum;
@@ -156,7 +156,7 @@ class NovedadesTabla extends LivewireDatatable
          else {
             $this->novedadId = $id;
             $this->dispatchBrowserEvent('eliminar', [
-                'objeto' => 'el expediente',
+                'objeto' => 'expediente',
                 'emit' => 'novedadEliminar'
             ]);
         }

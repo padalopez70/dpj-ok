@@ -148,7 +148,7 @@ window.addEventListener('eliminar', (e) =>{
     var data = Object.assign({}, data_default);
 
     if(e.detail.objeto) data.objeto_default = e.detail.objeto;
-    data.html = 'Confirma eliminación de '+data.objeto_default+'?';
+    data.html = 'Confirma eliminación del '+data.objeto_default+'?';
     data.icon = 'warning';
     data.showConfirmButton = 'true';
     data.showCancelButton = 'true';
