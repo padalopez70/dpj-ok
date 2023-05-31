@@ -14,6 +14,9 @@ use App\Http\Livewire\Sistema\AbmNovedad\NovedadForm;
 use App\Http\Livewire\Sistema\AbmEntidad\Entidades;
 use App\Http\Livewire\Sistema\AbmEntidad\EntidadForm;
 
+use App\Http\Livewire\Sistema\AbmEntidadDocumento\EntidadDocumentos;
+use App\Http\Livewire\Sistema\AbmEntidadDocumento\EntidadDocumentoForm;
+
 use App\Http\Livewire\Sistema\AbmTipo\Tipos;
 use App\Http\Livewire\Sistema\AbmTipo\TipoForm;
 
@@ -41,6 +44,10 @@ Route::get('/', function () {
  */
 
  Route::get('/tt', TestController::class);
+ Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('cache:clear');
+    return 'Cache borrado';
+});
 
 Route::middleware([
     'auth:sanctum',
@@ -59,7 +66,12 @@ Route::middleware([
      //PERMISO ADMINISTRADOR 1
      Route::group(['middleware' => ['PERMISOS:1']], function () {
 
-        //Novedades
+
+        //Entidades Docuemntos
+        Route::get('/entidad_documentos/crear/{id}', EntidadDocumentos::class)->name('sis.entidad.documentos.create');
+        Route::get('/entidad_documentos/{id}', EntidadDocumentos::class)->name('sis.entidad.documentos.index');
+
+        //Novedades Documentos
         Route::get('/documentos/crear/{id}', DocumentoForm::class)->name('sis.documentos.create');
         Route::get('/documentos/{id}', Documentos::class)->name('sis.documentos.index');
 
@@ -122,8 +134,7 @@ Route::middleware([
             //Novedades
             //Route::get('/documentos/{id}', Documentos::class)->name('sis.documentos.index');
             //Route::get('/documentos/crear/{id}', DocumentoForm::class)->name('sis.documentos.create');
-
-            //Route::get('/documentos/editar/{id}', DocumentoForm::class)->name('sis.documentos.edit');
+           //Route::get('/documentos/editar/{id}', DocumentoForm::class)->name('sis.documentos.edit');
 
                     //Novedades
             Route::get('/novedades', Novedades::class)->name('sis.novedades.index');
@@ -134,6 +145,9 @@ Route::middleware([
             Route::get('/entidades', Entidades::class)->name('sis.entidades.index');
             //Route::get('/entidades/crear', EntidadForm::class)->name('sis.entidades.create');
             //Route::get('/entidades/editar/{entidad}', EntidadForm::class)->name('sis.entidades.edit');
+
+           //emtidades documentos
+           Route::get('/entidad_documentos/{id}', EntidadDocumentos::class)->name('sis.entidad.documentos.index');
 
             //Tipos
             Route::get('/tipos', Tipos::class)->name('sis.tipos.index');

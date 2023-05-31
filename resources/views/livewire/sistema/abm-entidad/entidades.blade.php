@@ -1,18 +1,23 @@
 <x-box-titulo titulo="Entidades">
 
-   {{--  <x-slot name="botonera"> --}}
-
         <x-button><a href="{{ route('sis.entidades.create') }}">Crear</a></x-button>
 
 
-   {{--  </x-slot> --}}
-
     <slot>
+
         <livewire:sistema.abm-entidad.entidades-tabla/>
 
     </slot>
 
 </x-box-titulo>
+
+
+
+
+
+
+
+
 
 
 

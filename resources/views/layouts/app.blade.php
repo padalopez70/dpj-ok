@@ -12,7 +12,11 @@
         <link   rel="stylesheet"   href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
         <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-
+<style>
+    .col-ancho-fijo{
+        width: 50px;
+    }
+</style>
 
         <!-- Scripts -->
         @vite([
@@ -20,7 +24,7 @@
             'resources/css/flatpickr.css',
             'resources/js/app.js',
             'resources/js/sa2.js',
-            'resources/js/jquery.min.js',
+             /*  'resources/js/jquery.min.js', */
         ])
 
         <!-- Styles -->
@@ -63,6 +67,9 @@
 
   @extends('adminlte::page')  {{--esto hay que poner/sacar para  adminlte--}}
     @section('content')         {{--esto hay que poner/sacar para  adminlte--}}
+
+
+
         <div class="min-h-screen bg-gray-100">
             {{--  @livewire('navigation-menu') --}}
 
@@ -81,18 +88,31 @@
                 {{ $slot }}
             </main>
         </div>
+
          @stop{{--esto hay que poner/sacar para  adminlte--}}
-        @stack('modals')
-        @livewire('livewire-ui-modal')
+
+{{--          @stack('modals')
+        @livewire('livewire-ui-modal') --}}
         @livewireScripts
-        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
+
+{{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+ --}}
+
+ <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+<script>
+    Fancybox.bind("[data-fancybox]", {
+        // Your custom options
+      });
+
+    </script>
+
 
     </body>
 </html>
-<script>
 
-Fancybox.bind("[data-fancybox]", {
-    // Your custom options
-  });
 
-</script>
+
+

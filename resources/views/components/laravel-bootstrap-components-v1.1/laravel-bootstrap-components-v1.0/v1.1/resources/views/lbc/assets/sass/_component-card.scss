@@ -1,0 +1,20 @@
+.card-body {
+  .card-title {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.card-title {
+  a {
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+    }
+  }
+}

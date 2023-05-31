@@ -38,3 +38,10 @@ cambiar linea a:
 2- editar vendor/livewire/livewire/src/Controllers/FileUploadHandler.php
 comentar linea:
 > //abort_unless(request()->hasValidSignature(), 401);
+
+
+### para subir al hosting
+ php artisan cache:clear
+ php artisan route:clear
+ php artisan config:clear
+ php artisan view:clear

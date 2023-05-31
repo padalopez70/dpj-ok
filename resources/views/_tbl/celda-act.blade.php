@@ -90,9 +90,7 @@
 
      @if (isset($data['mostrar_info']))
             @if($data['mostrar_info_tipo'] == 'vista')
-            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse{{$data['id']}}" aria-expanded="false" aria-controls="collapse{{$data['id']}}">
-                {{$data['id']}}
-                </button>
+
 
 
             <!-- edicion modal -->
@@ -118,12 +116,13 @@
 </div>
 </div>
 
+{{-- <div class="table-row  p-1 divide-x divide-gray-100 text-sm text-gray-900 bg-gray-50">
 
-
-<div class="table-row p-1 divide-x divide-gray-100 text-sm text-gray-900 bg-gray-50">
-
-    <div class="table-cell px-6 py-2 table-col-span-3  text-center  whitespace-no-wrap text-sm text-gray-900 px-6 py-2">1  </div>
-    <div class="table-cell px-6 py-2    text-left  whitespace-no-wrap text-sm text-gray-900 px-6 py-2">
+    <div class="col-2 px-6 py-2 table-col-span-3  text-center  whitespace-no-wrap text-sm text-gray-900 px-6 py-2">1  </div>
+    <div class="colspan-2 px-6 py-2    text-left  whitespace-no-wrap text-sm  px-6 py-2" style="width: 66.67%;">
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse{{$data['id']}}" aria-expanded="false" aria-controls="collapse{{$data['id']}}">
+            {{$data['id']}}
+            </button>
          <div id="collapse{{$data['id']}}" class="collapse">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit,
             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -131,13 +130,36 @@
           </div>
     </div>
 
-    <div class="table-cell px-6 py-2   text-left  whitespace-no-wrap text-sm text-gray-900 px-6 py-2"> 3  </div>
-    <div class="table-cell px-6 py-2   text-left  whitespace-no-wrap text-sm text-gray-900 px-6 py-2"> 4</div>
+    <div class="col-3 px-6 py-2   text-left  whitespace-no-wrap text-sm text-gray-900 px-6 py-2"> 3  </div>
+    <div class="col-3 px-6 py-2   text-left  whitespace-no-wrap text-sm text-gray-900 px-6 py-2"> 4</div>
 
 
     <div class="table-cell px-6 py-2   text-left  whitespace-no-wrap text-sm text-gray-900 px-6 py-2 bg-success" >sin cerrar
     <div class="flex justify-center space-x-2 bg-info">veamos</div>
+ --}}
 
+ <div class="table-row p-0 divide-x divide-gray-100 text-sm text-gray-900 bg-gray-50">
+
+    <div class="table-cell px-0 py-0 table-col-span-3  text-center  whitespace-no-wrap text-sm text-gray-900 ">
+       {{--  <button class="btn btn-primary p-1 mt-0"  type="button" data-toggle="collapse" data-target="#collapse{{$data['id']}}" aria-expanded="false" aria-controls="collapse{{$data['id']}}">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+        </button> --}}
+      </div>
+    <div class="table-cell p-0 mx-0 col-span-3     text-left  whitespace-no-wrap text-sm" style="width: 50.67%;">
+
+         <div id="collapse{{$data['id']}}" class="collapse  px-0 p-0">
+            <em>Domicilio:</em> {{$data['domicilio']}}<br>
+            <em>Teléfono:</em> {{$data['telefono']}}<br>
+
+          </div>
+    </div>
+
+    <div  style="width: 20%;" class="table-cell px-0 py-0   text-left  whitespace-no-wrap text-sm text-gray-900">   </div>
+    <div class="table-cell px-6 py-2   text-left  whitespace-no-wrap text-sm text-gray-900"> </div>
+
+
+    <div class="table-cell px-0 py-0   text-left  whitespace-no-wrap text-sm text-gray-900" >
+    <div class="flex justify-center space-x-2 bg-info"></div>
 
 @endif
 

@@ -50,8 +50,9 @@
  --}}
 
     <!-- eliminar -->
+
     @if (isset($data['delete']))
-        @if($data['deleteTipo'] == 'tabla')
+        @if($data['deleteTipo'] == 'tabla' && !Permisos::control(201))
         <a title="ELIMINAR" href="#">
             <x-ico2 name="trash" wire:click="confirmarEliminacion({{$data['id']}})"/>
         </a>

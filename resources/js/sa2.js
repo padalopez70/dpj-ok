@@ -155,6 +155,19 @@ window.addEventListener('eliminar', (e) =>{
     swalRun(e, data);
 })
 
+//ActualizarDocumentosRequeridos
+
+/* window.addEventListener('ActualizarDocumentosRequeridos', (e) =>{
+    var data = Object.assign({}, data_default);
+
+    data.html = 'Registro Eliminado';
+    data.timer = data.timer_default;
+    data.icon = 'success';
+    data.cssStrong = data.cssBig = true;
+    swalRun(e,data);
+}) */
+
+
 //eliminado
 window.addEventListener('eliminado', (e) =>{
     var data = Object.assign({}, data_default);

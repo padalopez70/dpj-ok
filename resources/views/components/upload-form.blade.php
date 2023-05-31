@@ -46,7 +46,7 @@ $this->archivo_hash = pathinfo($this->archivo->hashName(), PATHINFO_FILENAME).".
         'archivo' => 'archivo',
         'multiple' => '',
         ])
-        <div class="p-1 border rounded-md border-slate-300">
+        <div class="p-1 border rounded-md border-slate-300 ">
         <div>
             {{-- <x-jet-input wire:model.defer="archivo" class="block w-full" type="file" name="archivo" id="archivo" /> --}}
             <div class="flex space-x-1" x-data="{ isUploading: false, progress: 0, isUploaded: false }"

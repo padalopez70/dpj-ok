@@ -32,15 +32,34 @@
 
                         <div class="col-md-6 col-sm-12">
                             <x-jet-label for="tipo" value="Tipo de Entidad *" />
-                            <x-simple-select wire:model.defer="entidad.id_tipo_entidad"
-                                name="id_tipo_entidad"
-                                id="id_tipo_entidad"
+                            <x-simple-select
+
+                                wire:model="entidad.id_tipo_entidad"
                                 :options='$tipos'
-                                placeholder="Seleccionar Tipo" :searchable='true' value-field='id' text-field='denominacion_tipo'
-                                class="form-select" />
+                                searh-input-placeholder="Seleccionar Tipo"
+                                :searchable='true'
+                                value-field='id'
+                                text-field='nombre'
+                                class="form-select"
+                                 />
                             <x-jet-input-error for="entidad.id_tipo_entidad" />
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <x-jet-label for="entidades_subtipo" class="mt-3 mb-1" value="Entidades Subtipo *" />
+                            <x-simple-select
 
-
+                                wire:model.defer="entidad_subtipos"
+                                name="entidad_subtipos"
+                                :options='$subtipos'
+                                searh-input-placeholder="Seleccionar Subtipos"
+                                placeholder="Seleccionar Subtipo"
+                                :searchable='true'
+                                value-field='id'
+                                text-field='nombre'
+                                class="form-select"
+                                multiple
+                                 />
+                            <x-jet-input-error for="entidad_subtipos" />
                         </div>
                     </div>
                     <div class="row">

@@ -59,7 +59,17 @@ class EntidadesTabla extends LivewireDatatable
 
             Column::callback('id', function ($id) {
                 $this->filaNum++;
-                return '<b>'.$this->filaNum.'</b>';
+                return ''.$this->filaNum.'';
+                /*
+                $cadena='
+                <a class="primary p-1 mt-0"   data-toggle="collapse" data-target="#collapse'.$id.'"
+                aria-expanded="false" aria-controls="collaps'.$id.'">
+                <i class="fa-solid fa-lg  fa-circle-info "></i>
+                </a>';
+
+                return $cadena;
+                */
+
             })
             ->unsortable()
             ->alignCenter()
@@ -74,11 +84,31 @@ class EntidadesTabla extends LivewireDatatable
                 ->label('tipo'),
          */
 
+
             Column::name('denominacion')
                 ->unsortable()
                 ->searchable()
                 ->view('_tbl.celda-principal')
+                ->sortBy('denominacion')
+                ->defaultSort('asc')
                 ->label('Nombre Entidad'),
+
+                Column::name('legajo')
+                ->unsortable()
+
+                ->searchable()
+                ->view('_tbl.celda-ancho-fijo')
+                ->sortBy('legajo')
+                ->label('Legajo'),
+
+
+                Column::name('domicilio')
+                ->unsortable()
+                ->searchable()
+                ->view('_tbl.celda-principal')
+                ->label('Domicilio'),
+
+                /* Column::name('domicilio')->hide(), */
 
                 Column::name('u.denominacion_tipo')
                 ->unsortable()
@@ -86,31 +116,38 @@ class EntidadesTabla extends LivewireDatatable
                 ->view('_tbl.celda-principal')
                 ->label('Tipo Entidad'),
 
-                Column::name('e.denominacion_estado')
+
+/*                 Column::name('e.denominacion_estado')
                 ->unsortable()
                 ->searchable()
-
+ */
 /*                 ->editable()
                  ->filterable(['activa', 'inactiva'])
  */
                   /* ->filterable($this->estados->pluck('denominacion_estado')) */
                 /*  ->filterOn('e.denominacion_estado')
                 ->filterable()*/
-                ->view('_tbl.celda-principal')
+/*                 ->view('_tbl.celda-principal')
                 ->label('Estado'),
+ */
 
-
-            Column::callback(['id'], function ($id) {
+            Column::callback(['id', 'domicilio','telefono'], function ($id, $domicilio,$telefono) {
                 $data = [
                     'showTipo' => false,
                     'show' => null,
                     'editTipo' => 'vista',
                     'edit' => 'sis.entidades.edit',
+
+                    'mostrar_doc_tipo' => 'vista',
+                    'mostrar_docs' => 'sis.entidad.documentos.index',
+
                     'mostrar_info' => 'sis.documentos.index',
                     'mostrar_info_tipo' => 'vista',
                     'deleteTipo' => 'tabla',
                     'delete' => true,
                     'id' => $id,
+                    'domicilio' => $domicilio,
+                    'telefono' => $telefono,
                 ];
                 return view('_tbl.celda-act', ['data' => $data]);
             })
@@ -128,6 +165,12 @@ class EntidadesTabla extends LivewireDatatable
 
 
     }
+
+    public function cellClasses($row, $column) {
+       // if ($column['index']==2) return ('bg-dark col-ancho-fijo');
+        //dump($column);
+    }
+
 
 /*
     public function rowClasses($row, $loop)
