@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Sistema\AbmEntidad;
 
 use App\Models\Entidad;
+use App\Models\Estado;
 use Exception;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
@@ -30,7 +31,8 @@ class EntidadesTabla extends LivewireDatatable
 
     public function builder()
     {
-        $this->filaNum = 0;
+        $this->filaNum = 3;
+
 
         return Entidad::query()
             ->leftJoin('tipos AS u', 'u.id', 'entidades.id_tipo_entidad')
@@ -44,13 +46,16 @@ class EntidadesTabla extends LivewireDatatable
 
     public function columns()
     {
+
+
+
         return [
 
-/*
-            Column::raw('@row:=@row + 1 AS num')
+
+/*            Column::raw('@row:=@row + 1 AS num')
                 ->defaultSort('asc')
                 ->label('#'),
-*/
+ */
 
             Column::callback('id', function ($id) {
                 $this->filaNum++;
@@ -84,37 +89,25 @@ class EntidadesTabla extends LivewireDatatable
                 Column::name('e.denominacion_estado')
                 ->unsortable()
                 ->searchable()
+
+/*                 ->editable()
+                 ->filterable(['activa', 'inactiva'])
+ */
+                  /* ->filterable($this->estados->pluck('denominacion_estado')) */
+                /*  ->filterOn('e.denominacion_estado')
+                ->filterable()*/
                 ->view('_tbl.celda-principal')
                 ->label('Estado'),
 
-                /*
-            Column::name('noticia')
-                ->unsortable()
-                ->label('Noticia'),
 
-            DateColumn::name('fecha')
-                ->sortable()
-                ->label('Fec.Noticia'),
-
-            DateColumn::name('fecha_inicio')
-                ->sortable()
-                ->label('Fec.Inicio'),
-
-            DateColumn::name('fecha_fin')
-                ->sortable()
-                ->label('Fec.Fin'),
-
-            Column::name('u.name')
-                ->unsortable()
-                ->label('Usuario'),
-
-                */
             Column::callback(['id'], function ($id) {
                 $data = [
                     'showTipo' => false,
                     'show' => null,
                     'editTipo' => 'vista',
                     'edit' => 'sis.entidades.edit',
+                    'mostrar_info' => 'sis.documentos.index',
+                    'mostrar_info_tipo' => 'vista',
                     'deleteTipo' => 'tabla',
                     'delete' => true,
                     'id' => $id,
@@ -124,9 +117,35 @@ class EntidadesTabla extends LivewireDatatable
                 ->excludeFromExport()
                 ->unsortable()
                 ->label('Acciones'),
+
+
+/*                 (new LabelColumn())
+                ->label('My custom heading')
+                ->content('This fixed string appears in every row'), */
+
         ];
+
+
+
     }
 
+/*
+    public function rowClasses($row, $loop)
+    {
+        return 'divide-x divide-gray-100 text-sm text-gray-900 ' . ($this->rowIsSelected($row) ? 'bg-yellow-100' : ($row->{'e.denominacion_estado'} === 'inactiva' ? 'bg-red-500' : ($loop->even ? 'bg-gray-100' : 'bg-gray-50')));
+        dd('paso por aqui');
+    }
+
+    public function renderRow($row, $loop)
+    {
+        parent::renderRow($row, $loop);
+
+        echo '<tr><td>hoooola</td></tr>';
+        //$table->appendRow('<tr></tr>');
+
+        dd('paso por aqui');
+    }
+ */
     public function confirmarEliminacion($id)
     {
         $this->entidadId = $id;

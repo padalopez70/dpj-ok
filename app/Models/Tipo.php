@@ -12,9 +12,9 @@ class Tipo extends Model
     use SoftDeletes;
     protected $table = 'tipos';
 
-    public function entidades(){
+  /*   public function entidades(){
         return $this->hasMany(Entidad::class, 'id');
-    }
+    } */
 
 
 }

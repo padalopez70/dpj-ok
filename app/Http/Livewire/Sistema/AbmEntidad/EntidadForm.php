@@ -7,6 +7,8 @@ use App\Models\Departamento;
 use App\Models\Entidad;
 use App\Models\Estado;
 use App\Models\Localidad;
+use App\Models\Subtipo;
+use App\Models\EntidadSubtipo;
 use App\Models\Tipo;
 
 
@@ -24,6 +26,11 @@ class EntidadForm extends Component
     public $localidades;
 
 
+    //nuevo
+    public $subtipos =[];
+    public $entidad_subtipos = [];
+
+
 
 
     public function render()
@@ -35,7 +42,10 @@ class EntidadForm extends Component
     public function mount(Entidad $entidad)
     {
         $this->entidad = $entidad;
-        $this->tipos=Tipo::get()->toArray();
+
+
+
+
         $this->estados=Estado::get()->toArray();
 
         $this->departamentos=Departamento::where('provincia_id', '21')
@@ -46,6 +56,15 @@ class EntidadForm extends Component
         ->get()->toArray();
         $this->localidad_seleccionada=$this->entidad->id_localidad;
 
+
+        //tipo y subtipo
+        $this->tipos=Tipo::select('id','denominacion_tipo AS nombre')->get()->toArray();
+        if($this->entidad->id != null){
+            $this->subtipos=Subtipo::where('tipo_id',$this->entidad->id_tipo_entidad)->get()->toArray();
+            $this->entidad_subtipos = EntidadSubtipo::where('entidad_id',$this->entidad->id)->pluck('subtipo_id');
+        }
+
+
         //para mostrar simple-select va con toArray();
         //$this->tipos = ['INFO','EXITO','ALARMA','GENERAL'];
 
@@ -54,12 +73,13 @@ class EntidadForm extends Component
         $this->view = 'sis.entidades.index';
     }
 
+
     public function limpiarForm()
     {
         $this->entidad->denominacion = "";
         $this->entidad->legajo = "";
         $this->entidad->id_tipo_entidad = "";
-        $this->entidad->id_estado = "";
+                $this->entidad->id_estado = "";
         $this->entidad->domicilio = "";
         $this->entidad->telefono = "";
 
@@ -71,6 +91,14 @@ class EntidadForm extends Component
         $this->noticia->fecha_fin = "";
         */
     }
+
+    public function updatedEntidadIdTipoEntidad($tipo_id)
+    {
+
+       $this->subtipos=Subtipo::where('tipo_id',$tipo_id)->get()->toArray();
+       $this->entidad_subtipos=[];
+    }
+
     public function rules()
     {
         return [
@@ -102,6 +130,7 @@ class EntidadForm extends Component
     public function guardar()
     {
 
+
         $this->entidad->id_departamento=$this->DepartamentoSeleccionado;
         $this->entidad->id_localidad=$this->localidad_seleccionada;
 
@@ -120,6 +149,14 @@ class EntidadForm extends Component
 
             $this->entidad->save();
 
+            //borro los subtipos de la entidad y las vuelvo a cargar
+            EntidadSubtipo::where('entidad_id', $this->entidad->id)->delete();
+            foreach ($this->entidad_subtipos as $subtipo_id) {
+                $ne = new EntidadSubtipo();
+                $ne->entidad_id = $this->entidad->id;
+                $ne->subtipo_id =  $subtipo_id;
+                $ne->save();
+            }
 
             $this->dispatchBrowserEvent('guardado');
 

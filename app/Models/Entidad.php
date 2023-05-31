@@ -12,8 +12,12 @@ class Entidad extends Model
     use SoftDeletes;
     protected $table = 'entidades';
 
-    public function tipos(){
+/*     public function tipos(){
         return $this->belongsTo(Tipo::class, 'id_tipo_entidad');
+    }
+ */
+    public function estados(){
+        return $this->belongsTo(Estado::class, 'id_estado');
     }
 
     public function novedades(){

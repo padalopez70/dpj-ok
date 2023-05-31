@@ -9,9 +9,9 @@ class TestController extends BaseController
 {
     function __invoke()
     {
-        $novedad = Novedad::where("expedientes", "001-33-01")->first();
-        //$novedad = Novedad::where("expediente", "001-33-01")->first();
-        dump($novedad->entidad->denominacion);
+        $novedad = Novedad::where("expediente", "44-332023")->first();
+        return view('livewire.sistema.abm-entidad.pruebas');
+        //dump($novedad->novedad_descripcion);
     }
 
 }
