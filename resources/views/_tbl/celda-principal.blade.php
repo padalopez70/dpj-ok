@@ -1,4 +1,5 @@
-<span class="font-bold" style="width: 100px;">
+<span class="" style="width: 400px;">
     {{$value}}
 {{-- {{$row->id}} --}}
 </span>
+

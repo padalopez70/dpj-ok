@@ -1,12 +1,15 @@
 <x-box-titulo titulo="Expedientes">
 
+    @if (Permisos::control('202|203|1'))
     <x-slot name="botonera">
         <x-button>
 
             <a href="{{ route('sis.novedades.create') }}">Crear</a>
 
+
         </x-button>
     </x-slot>
+    @endif
 
     <slot>
         <livewire:sistema.abm-novedad.novedades-tabla/>

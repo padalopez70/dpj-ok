@@ -2,11 +2,14 @@
 
 namespace App\Http\Livewire\Sistema\AbmNovedad;
 
+use App\Http\Livewire\Sistema\AbmTipoNovedad\TiposNovedad;
 use App\Lib\Sistema\Chequeos;
 use App\Models\Novedad;
+use App\Models\TipoNovedad;
 use Exception;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
+use Mediconesystems\LivewireDatatables\BooleanColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class NovedadesTabla extends LivewireDatatable
@@ -37,6 +40,7 @@ class NovedadesTabla extends LivewireDatatable
         return Novedad::query()
             ->leftJoin('entidades AS u', 'u.id', 'novedades.id_entidad')
             ->leftJoin('novedades_tipo AS b', 'b.id', 'novedades.id_tipo_novedad')
+            ->where('solicitud_pj', '=', 0)
           ->orderBy('novedades.id','DESC');
 
     }
@@ -55,6 +59,7 @@ class NovedadesTabla extends LivewireDatatable
             Column::callback('id', function ($id) {
                 $this->filaNum++;
                 return '<b>'.$this->filaNum.'</b>';
+
             })
             ->unsortable()
             ->alignCenter()
@@ -82,22 +87,61 @@ class NovedadesTabla extends LivewireDatatable
                 ->view('_tbl.celda-principal')
                 ->label('Nro exp'),
 
+                Column::callback(['id', 'u.denominacion'], function ($id) {
+
+                    //return '<b>'.$this->filaNum.'</b>';
+                    return Chequeos::TiposNovedad($id, "imprimir");
+
+                })
+                ->unsortable()
+                ->alignCenter()
+                ->excludeFromExport()
+                ->label('Tipos de Novedad'),
+
+                DateColumn::name('fecha')
+                ->unsortable()
+                ->unwrap()
+                ->searchable()
+                ->view('_tbl.celda-principal')
+                ->label(' Fecha  '),
 
 
-
-                Column::name('b.novedad_denominacion')
+/*                 Column::name('b.novedad_denominacion')
                 ->unsortable()
                 ->searchable()
                 ->view('_tbl.celda-principal')
-                ->label('Tipo Novedad'),
+                ->label('Tipo Novedad'), */
 
+                BooleanColumn::name('genera_gde')
+                ->label('Genera Gde')
+                ->filterable(),
+
+                Column::name('gde')
+                ->unsortable()
+                ->searchable()
+                ->view('_tbl.celda-principal')
+                ->label('GDE'),
+
+
+/*                 Column::callback(['id', 'genera_gde'], function ($id) {
+                    return  Chequeos::TiposNovedad($id, "genera_gde");
+                })
+                ->unsortable()
+                ->alignCenter()
+                ->excludeFromExport()
+                ->filterable(['si', 'no'])
+                ->label('Genera GDE'),
+
+ */
+
+ /*
             Column::name('novedad_descripcion')
                 ->unsortable()
                 ->searchable()
                 ->view('_tbl.celda-principal')
                 ->label('Descripción'),
 
-
+ */
 
                 /*
             Column::name('noticia')
@@ -121,17 +165,23 @@ class NovedadesTabla extends LivewireDatatable
                 ->label('Usuario'),
 
                 */
-            Column::callback(['id'], function ($id) {
+            Column::callback(['id', 'genera_gde'], function ($id,$genera_gde) {
                 $data = [
                     'showTipo' => false,
                     'show' => null,
                     'editTipo' => 'vista',
-                    'edit' => 'sis.novedades.edit',
+                    'editNovedad' => 'sis.novedades.edit',
                     'mostrar_doc_tipo' => 'vista',
                     'mostrar_docs' => 'sis.documentos.index',
+                    'imprimir_caratula_tipo' => 'vista',
+                    'imprimir_caratula' => 'sis.novedades.imprimir',
+                    'gde_tipo' => 'vista',
+                    'gde' => 'sis.novedades.gde',
+
                     'deleteTipo' => 'tabla',
                     'delete' => true,
                     'id' => $id,
+                    'genera_gde' => $genera_gde,
                 ];
                 return view('_tbl.celda-act', ['data' => $data]);
             })
@@ -140,6 +190,7 @@ class NovedadesTabla extends LivewireDatatable
                 ->label('Acciones'),
         ];
     }
+
 
     public function confirmarEliminacion($id)
     {

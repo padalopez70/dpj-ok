@@ -37,6 +37,7 @@
                                 wire:model="entidad.id_tipo_entidad"
                                 :options='$tipos'
                                 searh-input-placeholder="Seleccionar Tipo"
+                                placeholder="Seleccionar Tipo"
                                 :searchable='true'
                                 value-field='id'
                                 text-field='nombre'
@@ -61,6 +62,13 @@
                                  />
                             <x-jet-input-error for="entidad_subtipos" />
                         </div>
+                        <div class="col-md-6 col-sm-12">
+                            <x-jet-label for="titulo" class="mt-3 mb-1" value="Email *" />
+                            <x-jet-input wire:model.defer='entidad.email' type="text" name="email" id="email"
+                                class="w-full block" />
+                            <x-jet-input-error for="entidad.email" />
+                        </div>
+
                     </div>
                     <div class="row">
                         <div class="col-md-6 col-sm-12">

@@ -1,7 +1,7 @@
 <div>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">Crear o Editar un Expediente</h2>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{$label_formulario}}</h2>
     </x-slot>
 
     <div>
@@ -20,89 +20,71 @@
                             <x-ico2s name="backward" class="h-10 w-10 absolute right-0 fill-sky-300" />
                         </a>
                     </div>
-                     {{--
-                    <div class="col-span-6">
 
-                            <x-jet-label for="tipo" value="Tipo *" />
-                        <x-simple-select wire:model.defer="noticia.tipo" name="tipo" id="tipo" :options='$tipos'
-                            placeholder="Seleccionar Tipo" :searchable='true' value-field='id' text-field='nombre'
-                            class="form-select" />
-                        <x-jet-input-error for="noticia.tipo" />
-                    </div>
-                    --}}
-
-                    <div class="col-span-6">
-                        <x-jet-label for="tipo" value="Entidad *" style="float:relative;"/>
-                        <div class="dropdown text-left " style="float:relative;top:-5px;">
-                            <i class=" fa-solid fa-lg  fa-circle-info" data-toggle="dropdown"></i>
-                            <ul class="dropdown-menu bg-info text-white container ">
-                                <div class="" style="margin:20px; ">
-                                <b>Cómo elegir una Entidad?</b><br><br>
-                                <b>1- </b> Para elegir la Entidad despligue el listado de Entidades haciendo click en flecha de la derecha<br>
-                                <b>2- </b>Luego podrá seleccionar la Entidad haciendo un click sobre ella<br>
-                                <b>3- </b> Si el listado de Entidades es extenso podrá tipear parte del nombre para ir filtrando el listado<br>
-
-                                </div>
-                            </ul>
-                        </div>
-
-                        @if($puedo_cambiar_entidad=="si")
-                                <x-simple-select wire:model.defer="novedad.id_entidad"
-                                    name="id_entidad"
-                                    id="id_entidad"
-                                    :options="$entidades"
-                                    placeholder="Seleccionar Entidad"
-                                    :searchable='true'
-                                    value-field='id'
-                                    text-field='denominacion'
-                                    class="form-select"
-                                    />
-                        @else
-                                <x-simple-select wire:model.defer="novedad.id_entidad"
-                                name="id_entidad"
-                                id="id_entidad"
-                                :options="$entidades"
-                                placeholder="Seleccionar Entidad"
-                                :searchable='true'
-                                value-field='id'
-                                text-field='denominacion'
-                                class="form-select"
-                                disabled
-                                />
-                        @endif
-                             <x-jet-input-error for="novedad.id_entidad" />
-
-                     </div>
-
-
-                     <div class=" col-span-6 form-row bg-light p-2">
+                    <div class=" col-span-6 form-row bg-light p-2">
                         <div class="col">
-                             <x-jet-label for="tipo" value="Nro. Expediente *" />
+                            <x-jet-label for="tipo" value="Nro. Expediente: {{$novedad->numero}}-{{$novedad->codigo}}-{{$novedad->anio}}" />
                         </div>
                         <div class="col">
-                            <x-jet-input wire:model.defer='novedad.numero' placeholder="número" type="number" style="width: 10ch;" name="numero" id="numero"/>
+                            <x-jet-input wire:model.defer='novedad.numero' placeholder="número" type="hidden" style="width: 10ch;" name="numero" id="numero"/>
                             <x-jet-input-error for="novedad.numero" />
                         </div>
                         <div class="col">
-                            <x-jet-input wire:model.defer='novedad.codigo' placeholder="código" type="number" style="width: 10ch;" name="codigo" id="codigo"/>
+                            <x-jet-input wire:model.defer='novedad.codigo' placeholder="código" type="hidden" style="width: 10ch;" name="codigo" id="codigo"/>
                             <x-jet-input-error for="novedad.codigo" />
                         </div>
                         <div class="col">
-                            <x-jet-input wire:model.defer='novedad.anio' placeholder="año" type="number" style="width: 10ch;" name="anio" id="anio"/>
+                            <x-jet-input wire:model.defer='novedad.anio' value="33333333" placeholder="año" type="hidden" style="width: 10ch;" name="anio" id="anio"/>
                             <x-jet-input-error for="novedad.anio" />
                         </div>
 
                     </div>
 
+
+                    <!-- searchbox-personal -->
+                    <div class='col-span-12'>
+                        <x-jet-label for='id_entidad' value='Entidad *' class='capitalize' />
+                        <div class="col-span-12">
+                            <livewire:search-box-entidades id="id_entidad" listener="entidadTraer"
+                                placeholder="Nombre de la Entidad o número de Legajo" :mostrar="$novedad->id_entidad"/>
+                            <x-jet-input-error for="novedad.id_entidad" />
+                        </div>
+                    </div>
+                    <!-- searchbox-personal -->
+
+
                     <div class="col-span-6">
+
+                        <div class="dropdown text-left " style="float:relative;top:-5px;">
+                            <i class=" fa-solid fa-lg  fa-circle-info" data-toggle="dropdown"></i>
+                            <ul class="dropdown-menu bg-info text-white container ">
+                                <div class="" style="margin:20px; ">
+                                <b>Cómo elegir una Entidad?</b><br><br>
+                                <b>1- </b> Tipear el nombre de la Entidad o su número de Legajo<br>
+                                 <b>2- </b>Luego podrá seleccionar Entidad haciendo un click sobre el nombre de  ella<br>
+
+                                {{-- <b>3- </b> Si el listado de Entidades es extenso podrá tipear parte del nombre para ir filtrando el listado<br>
+ --}}
+                                </div>
+                            </ul>
+                        </div>
+
+
+
+                    <div class="row">
+                            <div class="col-md-6 col-sm-12">
+
                         <x-jet-label for="tipo" value="Tipo de Novedad" />
-                         <x-simple-select wire:model.defer="novedad.id_tipo_novedad"
+                         <x-simple-select wire:model.defer="novedad_tipos"
                              name="id_tipo_novedad"
                              id="id_tipo_novedad"
                              :options="$tipos_novedades"
-                             placeholder="Seleccionar tipo de novedad" :searchable='true' value-field='id' text-field='novedad_denominacion'
+                             placeholder="Seleccionar tipo de novedad"
+                             :searchable='true'
+                             value-field='id'
+                             text-field='novedad_denominacion'
                              class="form-select"
-
+                            multiple
                              />
                          <x-jet-input-error for="novedad.id_tipo_novedad" />
                      </div>
@@ -112,6 +94,25 @@
                         <x-flatpickr  :options='["maxDate" => "today"]'  wire:model="novedad.fecha" id="fecha" name="fecha" />
                         <x-jet-input-error for="novedad.fecha" />
                     </div>
+
+
+{{--                      <div class="col-md-6 col-sm-12">
+
+                        <x-jet-label for="genera_gde" value="Genera GDE" />
+                         <x-simple-select wire:model.defer="novedad.genera_gde"
+                             name="genera_gde"
+                             id="genera_gde"
+                             :options="$opciones_gde"
+                             placeholder="" :searchable='false' value-field='id' text-field='texto'
+                             class="form-select"
+
+                             />
+                         <x-jet-input-error for="novedad.genera_gde" />
+                     </div>
+ --}}
+
+                     </div>
+                     <br>
 
                     <div class="col-span-6">
                         <x-jet-label for="titulo" value="Descripcion *" />

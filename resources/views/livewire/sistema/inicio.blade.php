@@ -5,7 +5,8 @@
 <h4 class="text-center mt-5 text-ligth">DIRECCIÓN DE PERSONAS FÍSICAS</h4>
 <h5 class="text-center mt-0 mb-5 p-2 text-dark">Fiscalía del Estado - Gobierno de Santiago del Estero</h5>
 <br>
-<div class="container">
+
+{{-- <div class="container">
     <h2>Simple Collapsible</h2>
     <a class="btn btn-info" data-toggle="collapse" data-target="#demo">Simple collapsible</a>
     <div id="demo" class="collapse">
@@ -14,6 +15,9 @@
       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
     </div>
   </div>
+   --}}
+
+
 {{--
     <!-- Columna 1 -->
     <div class="flex flex-col md:w-4/12 w-full h-min gap-4">

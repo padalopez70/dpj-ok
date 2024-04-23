@@ -317,6 +317,14 @@ return [
 
         ],
 
+        [
+            'text'        => 'Solicitudes PJ',
+            'url'         => 'solicitudespj',
+            'icon'        => 'far fa-fw fa-file',
+
+        ],
+
+
 
         [
             'text'    => 'Tablas Maestras', 'can' => 'administrador',

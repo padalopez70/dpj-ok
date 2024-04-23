@@ -18,15 +18,40 @@ class Permisos
      *  - General simplificado
      */
 
+/*
     public static function control($requeridos)
     {
-        $pprr = explode('|', $requeridos);
-
-        foreach ($pprr as $pr) {
-            if (in_array($pr,session('permisos'))) {
-                return true;
+        if(session('permisos') != null){
+            $pprr = explode('|', $requeridos);
+            if($pprr != 'token'){
+                foreach ($pprr as $pr) {
+                    if (in_array($pr,session('permisos'))) {
+                        return true;
+                    }
+                }
+                return false;
             }
         }
         return false;
     }
+*/
+
+
+    public static function control($requeridos)
+    {
+
+        $pprr = explode('|', $requeridos);
+        $si_esta=0;
+        foreach ($pprr as $pr) {
+            if (in_array($pr,session('permisos'))) {
+                $si_esta=1;
+            }
+        }
+        //dd($si_esta, session('permisos')," - ",$pprr, $requeridos);
+
+       if ($si_esta==1) return true;
+        else return false;
+    }
+
+
 }

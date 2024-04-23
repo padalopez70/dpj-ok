@@ -304,27 +304,44 @@ return [
 
         // Sidebar items:
         [
-            'text'        => 'Expedientes',
+            'text'        => 'Expedientes', 'can' => 'expediente-ok',
             'url'         => 'novedades',
             'icon'        => 'far fa-fw fa-file',
 
         ],
 
         [
-            'text'        => 'Entidades',
+            'text'        => 'Entidades', 'can' => 'entidades-ok',
             'url'         => 'entidades',
             'icon'        => 'far fa-fw fa-file',
 
         ],
 
+        [
+            'text'        => 'Solicitudes PJ',
+            'url'         => 'solicitudes',
+            'icon'        => 'far fa-fw fa-file',
+
+        ],
 
         [
-            'text'    => 'Tablas Maestras', 'can' => 'administrador',
+            'text'        => 'Exp S.A',
+            'url'         => 'sa',
+            'icon'        => 'far fa-fw fa-file',
+
+        ],
+
+        [
+            'text'    => 'Tablas Maestras', 'can' => ['administrador', 'director'],
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
                     'text' => 'Tipos de Entidad',
                     'url'  => 'tipos',
+                ],
+                [
+                    'text' => 'SubTipos de Entidad',
+                    'url'  => 'subtipos',
                 ],
                 [
                     'text' => 'Tipos de Novedad',
@@ -333,6 +350,10 @@ return [
                 [
                     'text' => 'Tipos de Estado',
                     'url'  => 'estados',
+                ],
+                [
+                    'text' => 'Tipos de Documento',
+                    'url'  => 'tiposdocumento',
                 ],
 
             ],
@@ -362,6 +383,7 @@ return [
                     'text' => 'permisos',
                     'url'  => 'sistema/usuarios/permisos',
                 ],
+
 
             ],
         ],

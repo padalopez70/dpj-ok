@@ -4,9 +4,13 @@ namespace App\Http\Livewire\Sistema\AbmEntidad;
 
 use App\Models\Entidad;
 use App\Models\Estado;
+use App\Lib\Sistema\Chequeos;
 use Exception;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
+use Mediconesystems\LivewireDatatables\LabelColumn;
+use Mediconesystems\LivewireDatatables\BooleanColumn;
+
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class EntidadesTabla extends LivewireDatatable
@@ -37,6 +41,8 @@ class EntidadesTabla extends LivewireDatatable
         return Entidad::query()
             ->leftJoin('tipos AS u', 'u.id', 'entidades.id_tipo_entidad')
             ->leftJoin('estados AS e', 'e.id', 'entidades.id_estado')
+
+
 
         //->letjoin('ejemplo_tipos AS ejt','ejt.id','ejemplos.ejemplo_tipo_id');
         ->orderBy('entidades.id','DESC');
@@ -101,11 +107,43 @@ class EntidadesTabla extends LivewireDatatable
                 ->sortBy('legajo')
                 ->label('Legajo'),
 
+/*
+                Column::callback(['id'], function ($id) {
+                    $this->filaNum++;
+                    //return '<b>'.$this->filaNum.'</b>';
+                    //return Chequeos::TieneDocCompleta($id);
+                    $cadena_doc= Chequeos::EntidadDocumentos($id);
+                    $vector = explode("**",  $cadena_doc);
+                    $cadena_completo='<label class="bg-success p-2"> completo </label>';
+                    $cadena_incompleto='<label class="bg-danger p-2"> incompleto </label>';
+                    $cadena_completo='completo';
+                    $cadena_incompleto='incompleto';
+                    if ($vector[0]==" bg-success" && $vector[1]==" bg-success" && $vector[2]==" bg-success")
+                        return $cadena_completo;
+                    //else return "//".$vector[0]."//";
+                    else return $cadena_incompleto;
+
+                })
+                //
+                ->filterable(['completo', 'incompleto'])
+                ->unsortable()
+                ->searchable()
+                ->alignCenter()
+                ->excludeFromExport()
+                ->label('Documentación'),
+ */
+
+                BooleanColumn::name('doc_completa')
+                ->label('Doc Completa')
+                ->filterable(),
+
+
 
                 Column::name('domicilio')
                 ->unsortable()
                 ->searchable()
                 ->view('_tbl.celda-principal')
+
                 ->label('Domicilio'),
 
                 /* Column::name('domicilio')->hide(), */
@@ -136,7 +174,7 @@ class EntidadesTabla extends LivewireDatatable
                     'showTipo' => false,
                     'show' => null,
                     'editTipo' => 'vista',
-                    'edit' => 'sis.entidades.edit',
+                    'editEntidad' => 'sis.entidades.edit',
 
                     'mostrar_doc_tipo' => 'vista',
                     'mostrar_docs' => 'sis.entidad.documentos.index',

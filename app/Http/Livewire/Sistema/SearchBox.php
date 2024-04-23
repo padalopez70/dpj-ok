@@ -11,7 +11,7 @@ class SearchBox extends Component
      * CAMPOS SETEABLES
      * obligatorios: modelo, campos, listener
      * modificables: placeholder, sinResultado
-     *
+     * extra: <para edicion> :mostrar="<id>"
      *
      *
      *
@@ -41,10 +41,16 @@ class SearchBox extends Component
 
     public $query;
     public $datos;
+    public $dato;
+    public $mostrar;
+    public $minError;
+    public $minErrorLeyenda;
     public $datoSeleccionado = false;
 
     public function mount()
     {
+        $this->minErrorLeyendaSet();
+        if($this->mostrar) $this->mostrarDato();
     }
 
     public function render()
@@ -70,14 +76,20 @@ class SearchBox extends Component
 
 
     //cuando selecciono un resultado
-    public function datoSeleccionar($indice)
+    public function datoSeleccionar($indice,$mostrar = null)
     {
+        if($mostrar){
+            $this->datoSeleccionado = true;
+            $this->query = $mostrar;
+        }
+        else{
         //GUARDAR ID
         $this->datoSeleccionado = true;
         $this->query = $this->datos[$indice]['texto'];
         $dato = $this->datos[$indice];
         $this->emit($this->listener, $dato['id']);
         //$this->datos = [];
+        }
     }
 
     public function updatedQuery()
@@ -102,9 +114,14 @@ class SearchBox extends Component
         }
     }
 
+    public function minErrorLeyendaSet()
+    {
+        $this->minErrorLeyenda = "Ingresar al menos  <b>".$this->min."</b> Caracteres Min.";
+    }
+
     public function consulta($query)
     {
-        dump("Debe Crear un extends con la funcion consulta(\$query)");
+        dump("Crear un extends con la funcion consulta(\$query)");
         /*
 
         $this->datos = $this->modelo::select(
@@ -126,6 +143,17 @@ class SearchBox extends Component
                 return $row;
             })->toArray();
 
+        */
+    }
+    public function mostrarDato(){
+        dump("Crear un extends con la funcion mostrarDato(\$query)");
+        /*
+        $this->datos = Proveedor::select(
+            'id_proveedor AS id',
+            DB::raw('CONCAT(razon_social," (",cuit," - ", titular,")") AS texto')
+        )
+        ->where('id_proveedor',$this->mostrar)->first();
+        $this->datoSeleccionar(null,$this->datos['texto']);
         */
     }
 }

@@ -28,6 +28,14 @@ class TipoNovedadForm extends Component
         $this->tipoNovedad = $tipoNovedad;
                $this->path = Route::currentRouteName();
         $this->view = 'sis.tiposnovedad.index';
+
+        $this->opciones_gde = [
+            ['id' => 1, 'texto' => 'SI'],
+            ['id' => 2, 'texto' => 'NO']
+        ];
+        $this->aux_genera_gde =1;
+
+
         //dd($this->tipoNovedad);
     }
 
@@ -46,7 +54,8 @@ class TipoNovedadForm extends Component
     public function rules()
     {
         return [
-            'tipoNovedad.novedad_denominacion' => 'required'
+            'tipoNovedad.novedad_denominacion' => 'required',
+            'tipoNovedad.genera_gde' => 'required'
         ];
     }
 
@@ -72,6 +81,7 @@ class TipoNovedadForm extends Component
 
             //$this->noticia->user_id = Auth::user()->id;
             $this->tipoNovedad->novedad_denominacion;
+            $this->tipoNovedad->genera_gde;
 
             $this->tipoNovedad->save();
 

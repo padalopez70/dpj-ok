@@ -2,12 +2,12 @@
 
 namespace App\Http\Livewire\Sistema\AbmEntidad;
 
-
+use App\Lib\Sistema\Chequeos;
 use App\Models\Departamento;
 use App\Models\Entidad;
 use App\Models\Estado;
 use App\Models\Localidad;
-use App\Models\Subtipo;
+use App\Models\SubTipo;
 use App\Models\EntidadSubtipo;
 use App\Models\Tipo;
 
@@ -29,6 +29,8 @@ class EntidadForm extends Component
     //nuevo
     public $subtipos =[];
     public $entidad_subtipos = [];
+    public $nombre_temporal;
+    public $id_solicitud;
 
 
 
@@ -39,9 +41,19 @@ class EntidadForm extends Component
         return view('livewire.sistema.abm-entidad.entidad-form');
     }
 
-    public function mount(Entidad $entidad)
+    public function mount(Entidad $entidad, $nombre_temporal=null, $id_solicitud=null)
     {
         $this->entidad = $entidad;
+
+                      // Verifica si la instancia de Novedad es nueva o existente
+                      if(!$this->entidad->id){
+                        //dd($this->novedad->id);
+                        $this->label_formulario ="Crear Entidad";
+                        $this->entidad->denominacion=$nombre_temporal;
+
+                       // $this->novedad->anio = 6666; // Configura el valor predeterminado para crear
+                    }
+                    else $this->label_formulario ="Editar Entidad";
 
 
 
@@ -69,6 +81,9 @@ class EntidadForm extends Component
         //$this->tipos = ['INFO','EXITO','ALARMA','GENERAL'];
 
 
+
+
+
         $this->path = Route::currentRouteName();
         $this->view = 'sis.entidades.index';
     }
@@ -82,6 +97,7 @@ class EntidadForm extends Component
                 $this->entidad->id_estado = "";
         $this->entidad->domicilio = "";
         $this->entidad->telefono = "";
+        $this->entidad->email = "";
 
         /*
         $this->noticia->titulo = "";
@@ -106,6 +122,7 @@ class EntidadForm extends Component
             'entidad.id_tipo_entidad' => 'required',
             'entidad.id_estado' => 'required',
             'entidad.legajo' => 'required',
+            'entidad.email' => 'required',
             'entidad.domicilio' => 'required',
             'entidad.telefono' => 'required',
             'entidad.id_localidad' => 'required',
@@ -143,6 +160,7 @@ class EntidadForm extends Component
             $this->entidad->id_tipo_entidad;
             $this->entidad->id_estado;
             $this->entidad->legajo;
+            $this->entidad->email;
             $this->entidad->domicilio;
             $this->entidad->telefono;
             //dump($this->id_departamento,$this->id_localidad);
@@ -157,6 +175,9 @@ class EntidadForm extends Component
                 $ne->subtipo_id =  $subtipo_id;
                 $ne->save();
             }
+
+            //si vengo de SOLICITUDES DE PERSONERIA JURICIDA ACTUALIZO EL REGISTRO
+            if ($this->id_solicitud) Chequeos::Actualizar_Solicitud_PJ($this->id_solicitud);
 
             $this->dispatchBrowserEvent('guardado');
 

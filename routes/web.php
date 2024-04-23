@@ -10,6 +10,15 @@ use App\Http\Livewire\Sistema\AbmDocumento\DocumentoForm;
 
 use App\Http\Livewire\Sistema\AbmNovedad\Novedades;
 use App\Http\Livewire\Sistema\AbmNovedad\NovedadForm;
+use App\Http\Livewire\Sistema\AbmNovedad\NovedadImpresion;
+use App\Http\Livewire\Sistema\AbmNovedad\NovedadGde;
+
+use App\Http\Livewire\Sistema\AbmSolicitud\Solicitudes;
+use App\Http\Livewire\Sistema\AbmSolicitud\SolicitudForm;
+
+use App\Http\Livewire\Sistema\AbmSa\SolicitudesSa;
+use App\Http\Livewire\Sistema\AbmSa\SolicitudSaForm;
+
 
 use App\Http\Livewire\Sistema\AbmEntidad\Entidades;
 use App\Http\Livewire\Sistema\AbmEntidad\EntidadForm;
@@ -20,14 +29,22 @@ use App\Http\Livewire\Sistema\AbmEntidadDocumento\EntidadDocumentoForm;
 use App\Http\Livewire\Sistema\AbmTipo\Tipos;
 use App\Http\Livewire\Sistema\AbmTipo\TipoForm;
 
+use App\Http\Livewire\Sistema\AbmSubTipo\SubTipos;
+use App\Http\Livewire\Sistema\AbmSubTipo\SubTipoForm;
+
 use App\Http\Livewire\AbmEjemplo\EjemploForm;
 use App\Http\Livewire\AbmEjemplo\Ejemplos;
 
 //use App\Http\Livewire\Sistema\AbmDocumento\Documentos;
 use App\Http\Livewire\Sistema\AbmNoticia\NoticiaForm;
 use App\Http\Livewire\Sistema\AbmNoticia\Noticias;
+
 use App\Http\Livewire\Sistema\AbmTipoNovedad\TipoNovedadForm;
 use App\Http\Livewire\Sistema\AbmTipoNovedad\TiposNovedad;
+
+use App\Http\Livewire\Sistema\AbmTipoDocumento\TipoDocumentoForm;
+use App\Http\Livewire\Sistema\AbmTipoDocumento\TiposDocumento;
+
 use App\Http\Livewire\Sistema\AbmUsuario\Permisos;
 use App\Http\Livewire\Sistema\AbmUsuario\Usuario;
 use App\Http\Livewire\Sistema\AbmUsuario\UsuarioForm;
@@ -63,8 +80,13 @@ Route::middleware([
     Route::get('/', Dashboard::class)->name('inicio');
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
+
+
+
      //PERMISO ADMINISTRADOR 1
-     Route::group(['middleware' => ['PERMISOS:1']], function () {
+     Route::group(['middleware' => ['PERMISOS:1|205']], function () {
+
+
 
 
         //Entidades Docuemntos
@@ -81,16 +103,29 @@ Route::middleware([
         Route::get('/novedades', Novedades::class)->name('sis.novedades.index');
         Route::get('/novedades/crear', NovedadForm::class)->name('sis.novedades.create');
         Route::get('/novedades/editar/{novedad}', NovedadForm::class)->name('sis.novedades.edit');
+        Route::get('/novedades/imprimir/{novedad}', NovedadImpresion::class)->name('sis.novedades.imprimir');
 
-        //Entidades
-        Route::get('/entidades', Entidades::class)->name('sis.entidades.index');
-        Route::get('/entidades/crear', EntidadForm::class)->name('sis.entidades.create');
-        Route::get('/entidades/editar/{entidad}', EntidadForm::class)->name('sis.entidades.edit');
+        //Solicitudes
+        Route::get('/solicitudes', Solicitudes::class)->name('sis.solicitudes.index');
+        Route::get('/solicitudes/crear/', SolicitudForm::class)->name('sis.solicitudes.create');
+        Route::get('/sa', SolicitudesSa::class)->name('sis.solicitudes.sa.index');
+        Route::get('/sa/crear/', SolicitudSaForm::class)->name('sis.solicitudes.sa.create');
+
+
+
+
+
 
         //Tipos
         Route::get('/tipos', Tipos::class)->name('sis.tipos.index');
         Route::get('/tipos/crear', TipoForm::class)->name('sis.tipos.create');
         Route::get('/tipos/editar/{tipo}', TipoForm::class)->name('sis.tipos.edit');
+
+        //SubTipos
+        Route::get('/subtipos', SubTipos::class)->name('sis.subtipos.index');
+        Route::get('/subtipos/crear', SubTipoForm::class)->name('sis.subtipos.create');
+        Route::get('/subtipos/editar/{subtipo}', SubTipoForm::class)->name('sis.subtipos.edit');
+
 
         //Estados
         Route::get('/estados', Estados::class)->name('sis.estados.index');
@@ -102,6 +137,11 @@ Route::middleware([
         Route::get('/tiposnovedad', TiposNovedad::class)->name('sis.tiposnovedad.index');
         Route::get('/tiposnovedad/crear', TipoNovedadForm::class)->name('sis.tiposnovedad.create');
         Route::get('/tiposnovedad/editar/{tipoNovedad}', TipoNovedadForm::class)->name('sis.tiposnovedad.edit');
+
+        //Tipos Documento
+        Route::get('/tiposdocumento', TiposDocumento::class)->name('sis.tiposdocumento.index');
+        Route::get('/tiposdocumento/crear', TipoDocumentoForm::class)->name('sis.tiposdocumento.create');
+        Route::get('/tiposdocumento/editar/{tipoDocumento}', TipoDocumentoForm::class)->name('sis.tiposdocumento.edit');
 
 
         //Usuarios
@@ -159,4 +199,65 @@ Route::middleware([
 
     });
 
+
+     //PERMISO MESA DE ENTRADA
+    Route::group(['middleware' => ['PERMISOS:200|205']], function () {
+
+        //Novedades
+    Route::get('/novedades', Novedades::class)->name('sis.novedades.index');
+    //Route::get('/novedades/crear', NovedadForm::class)->name('sis.novedades.create');
+    //Route::get('/novedades/editar/{novedad}', NovedadForm::class)->name('sis.novedades.edit');
+    Route::get('/novedades/imprimir/{novedad}', NovedadImpresion::class)->name('sis.novedades.imprimir');
+    Route::get('/entidades', Entidades::class)->name('sis.entidades.index');
+    });
+
+
+    //PERMISO ADMINISTRATIVO -GDE // ADMINISTRATIVO-DOCUMENTADOR
+     Route::group(['middleware' => ['PERMISOS:200|202|203|205']], function () {
+
+        //Novedades
+    Route::get('/novedades', Novedades::class)->name('sis.novedades.index');
+    //Route::get('/novedades/crear', NovedadForm::class)->name('sis.novedades.create');
+    //Route::get('/novedades/editar/{novedad}', NovedadForm::class)->name('sis.novedades.edit');
+    Route::get('/novedades/imprimir/{novedad}', NovedadImpresion::class)->name('sis.novedades.imprimir');
+    Route::get('/novedades/gde/{novedad}', NovedadGde::class)->name('sis.novedades.gde');
+
+    //Novedades Documentos
+    Route::get('/documentos/crear/{id}', DocumentoForm::class)->name('sis.documentos.create');
+    Route::get('/documentos/{id}', Documentos::class)->name('sis.documentos.index');
+
+
+
+
+    });
+
+    //PERMISO ABM ENTIDADES
+    Route::group(['middleware' => ['PERMISOS:1|200|204|205']], function () {
+
+          //Entidades
+          //Route::get('/entidades', Entidades::class)->name('sis.entidades.index');
+          //Route::get('/entidades/crear', EntidadForm::class)->name('sis.entidades.create');
+          //Route::get('/entidades/editar/{entidad}', EntidadForm::class)->name('sis.entidades.edit');
+          //Entidades
+        Route::get('/entidades', Entidades::class)->name('sis.entidades.index');
+        Route::get('/entidades/crear/{nombre_temporal?}/{id_solicitud?}', EntidadForm::class)->name('sis.entidades.create');
+        Route::get('/entidades/editar/{entidad}', EntidadForm::class)->name('sis.entidades.edit');
+        Route::get('/solicitudes/editar/{novedad}', SolicitudForm::class)->name('sis.solicitudes.edit');
+        Route::get('/sa/editar/{novedad}', SolicitudSaForm::class)->name('sis.solicitudes.sa.edit');
+
+    });
+
+    //PERMISO DIRECTOR
+    Route::group(['middleware' => ['PERMISOS:205']], function () {
+
+    //Tipos
+    Route::get('/tipos', Tipos::class)->name('sis.tipos.index');
+    Route::get('/tipos/crear', TipoForm::class)->name('sis.tipos.create');
+    Route::get('/tipos/editar/{tipo}', TipoForm::class)->name('sis.tipos.edit');
+
+    });
+
+
+
 });
+

@@ -40,6 +40,21 @@
                         <x-jet-input-error for="tipoNovedad.novedad_denominacion" />
                     </div>
 
+                    <div class="col-md-6 col-sm-12">
+                        <br>
+                        <x-jet-label for="genera_gde" value="Genera GDE" />
+                         <x-simple-select wire:model.defer="tipoNovedad.genera_gde"
+                             name="genera_gde"
+                             id="genera_gde"
+                             :options="$opciones_gde"
+                             placeholder="" :searchable='false' value-field='id' text-field='texto'
+                             class="form-select"
+
+                             />
+                         <x-jet-input-error for="tipoNovedad.genera_gde" />
+                     </div>
+
+
                     <div class="col-span-6">
                         <x-slot name="actions">
                             <div class="space-x-2">

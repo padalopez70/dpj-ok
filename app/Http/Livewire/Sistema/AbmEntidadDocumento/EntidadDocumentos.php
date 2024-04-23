@@ -50,6 +50,8 @@ class EntidadDocumentos extends Component
 
     public function ActualizarDocumentosRequeridos($id_novedad)
     {
+        $completa=0;
+
         $this->estatuto = EntidadDocumento::where('id_novedad',$id_novedad)
         ->where('tipo_documento', 1)
         ->first();
@@ -61,7 +63,25 @@ class EntidadDocumentos extends Component
         $this->asamblea = EntidadDocumento::where('id_novedad',$id_novedad)
         ->where('tipo_documento', 3)
         ->first();
-    }
 
+
+                   //--------------ACTUALIZO DOC_COMPLETA EN ENTIDADES
+
+                if ($this->estatuto && $this->personeria  && $this->asamblea )   $completa=1 ;
+                else $completa=0;
+               // Buscar el registro por ID
+               $this->entidad = Entidad::find($id_novedad);
+
+               if (!$this->entidad) {
+                   // Manejar el caso en el que no se encuentre el registro
+                   return response()->json(['mensaje' => 'Registro no encontrado'], 404);
+               }
+
+               // Actualizar el campo doc_completo
+               $this->entidad->doc_completa = $completa;
+               //dd($completa.' '. $id_novedad);
+               $this->entidad->save();
+
+    }
 
 }

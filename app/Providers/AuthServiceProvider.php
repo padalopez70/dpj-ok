@@ -40,6 +40,36 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('administrador', function(){
             return Permisos::control(1);
         });
+
+        $this->registerPolicies();
+        Gate::define('mesa', function(){
+            return Permisos::control(200);
+        });
+
+        $this->registerPolicies();
+        Gate::define('administrativo-gde', function(){
+            return Permisos::control(202,203,1);
+        });
+
+        $this->registerPolicies();
+        Gate::define('expediente-ok', function(){
+            return Permisos::control("200|202|203|205|1"); //mesa-GDE-documentador
+        });
+
+        $this->registerPolicies();
+        Gate::define('entidades-ok', function(){
+            return Permisos::control("200|204|205|1");//mesa- abm entidades - administrador
+        });
+
+        $this->registerPolicies();
+        Gate::define('abm-entidades', function(){
+            return Permisos::control(204);
+        });
+
+        $this->registerPolicies();
+        Gate::define('director', function(){
+            return Permisos::control(205);
+        });
         //
     }
 }

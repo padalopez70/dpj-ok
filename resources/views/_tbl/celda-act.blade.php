@@ -37,7 +37,7 @@
 
     <!-- mostrar docuemtnso -->
 
-    @if (isset($data['mostrar_docs']))
+    @if (isset($data['mostrar_docs']) && (Permisos::control('1|203|205') || Permisos::control(203) ))
     @if($data['mostrar_doc_tipo'] == 'vista')
     <a title="VER DOCUMENTOS VINCULADOS" href="{{route($data['mostrar_docs'],$data['id'])}}"><i class="far fa-lg fa-file"></i>
     </a>
@@ -51,6 +51,80 @@
 @endif
 
 
+    <!-- CARGAR GDE -->
+
+    @if (isset($data['gde']) && (Permisos::control('1|202|205')))
+    @if($data['gde_tipo'] == 'vista' && $data['genera_gde']==1)
+
+     <a title="CARGAR GDE" href="{{route($data['gde'],$data['id'])}}"><i class="fa-brands fa-google"></i>
+  {{--   <a title="IMPRIMIR CARATULA" href="imprimir_caratula.php?id={{$data['id']}}" target="_blank"><i class="far fa-lg fa-file"></i> --}}
+     </a>
+
+
+    <!-- edicion modal -->
+    @elseif($data['mostrar_doc_tipo'] == 'modal')
+    <a title="EDITAR" href="#">
+        @php if(empty($data['accion']))$data['accion']='edit' @endphp
+        <x-ico2 name="queue-list" onclick="Livewire.emit('openModal', '{{$data['edit']}}', {{ json_encode(['data' => $data]) }})" />
+    </a>
+    @endif
+@endif
+
+
+    <!-- IMPRIMIR CARATULA -->
+
+    @if (isset($data['imprimir_caratula']) && (Permisos::control('1|200|205')))
+    @if($data['imprimir_caratula_tipo'] == 'vista')
+     <a title="IMPRIMIR CARATULA" href="{{route($data['imprimir_caratula'],$data['id'])}}"><i class="fa fa-print fa-1x"></i>
+  {{--   <a title="IMPRIMIR CARATULA" href="imprimir_caratula.php?id={{$data['id']}}" target="_blank"><i class="far fa-lg fa-file"></i> --}}
+    </a>
+    <!-- edicion modal -->
+    @elseif($data['mostrar_doc_tipo'] == 'modal')
+    <a title="EDITAR" href="#">
+        @php if(empty($data['accion']))$data['accion']='edit' @endphp
+        <x-ico2 name="queue-list" onclick="Livewire.emit('openModal', '{{$data['edit']}}', {{ json_encode(['data' => $data]) }})" />
+    </a>
+    @endif
+@endif
+
+
+@if (isset($data['editNovedad']) && (Permisos::control('1|200|205')  ))
+@if($data['editTipo'] == 'vista')
+<a title="EDITAR" href="{{route($data['editNovedad'],$data['id'])}}">
+    <x-ico2 name="pencil-square" />
+</a>
+<!-- edicion modal -->
+@elseif($data['editTipo'] == 'modal')
+<a title="EDITAR" href="#">
+    @php if(empty($data['accion']))$data['accion']='edit' @endphp
+    <x-ico2 name="pencil-square" onclick="Livewire.emit('openModal', '{{$data['edit']}}', {{ json_encode(['data' => $data]) }})" />
+</a>
+@endif
+@endif
+
+{{-- solicitud_nombre_entidad --}}
+<!-- edicion SOLICITUD -->
+@if (isset($data['editSolicitud']) && (Permisos::control('1|204|205')  ))
+@if($data['editTipo'] == 'vista')
+    <a title="EDITAR" href="{{route($data['editSolicitud'],$data['solicitud_nombre_entidad'])}}">
+    <x-ico2 name="pencil-square" />
+</a>
+@endif
+@endif
+
+@if (isset($data['editEntidad']) && (Permisos::control('1|204|205')  ))
+@if($data['editTipo'] == 'vista')
+<a title="EDITAR" href="{{route($data['editEntidad'],$data['id'])}}">
+    <x-ico2 name="pencil-square" />
+</a>
+<!-- edicion modal -->
+@elseif($data['editTipo'] == 'modal')
+<a title="EDITAR" href="#">
+    @php if(empty($data['accion']))$data['accion']='edit' @endphp
+    <x-ico2 name="pencil-square" onclick="Livewire.emit('openModal', '{{$data['edit']}}', {{ json_encode(['data' => $data]) }})" />
+</a>
+@endif
+@endif
 
     <!-- edicion tradicional -->
 
@@ -70,7 +144,7 @@
 
 
     <!-- eliminar -->
-    @if (isset($data['delete']))
+    @if (isset($data['delete']) && (Permisos::control('1|205')))
         @if($data['deleteTipo'] == 'tabla')
         <a title="ELIMINAR" href="#">
             <x-ico2 name="trash" wire:click="confirmarEliminacion({{$data['id']}})"/>

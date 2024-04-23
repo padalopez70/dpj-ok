@@ -11,9 +11,10 @@
 
    {{--  </x-slot> --}}
 
+        <x-box-titulo titulo="Documentos Vinculados">
         <livewire:sistema.abm-documento.documentos-tabla  :id_novedad="$id_novedad"/>
 
-
+    </x-box-titulo>
 </div>
 
 

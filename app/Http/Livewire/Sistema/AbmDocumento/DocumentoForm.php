@@ -6,6 +6,7 @@ namespace App\Http\Livewire\Sistema\AbmDocumento;
 use App\Models\Documento;
 use App\Models\Entidad;
 use App\Models\Novedad;
+use App\Models\TipoDocumento;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,7 @@ class DocumentoForm extends Component
     public $archivo;
     public $documento;
     public $fila;
+    public $tipo_documento;
 
     public function render()
     {
@@ -44,6 +46,7 @@ class DocumentoForm extends Component
         ->leftJoin('entidades AS u', 'u.id', 'novedades.id_entidad')
         ->first()->toArray();
         $this->nombre_entidad = $this->fila['denominacion'];
+        $this->tipos_documentos=TipoDocumento::get()->toArray();
 
 
         $this->path = Route::currentRouteName();
@@ -64,6 +67,7 @@ class DocumentoForm extends Component
         return [
             'documento.path' => '',
             'documento.comentario' => '',
+            'documento.tipo_documento' => '',
             'archivo' => 'max:2048|mimes:pdf,jpg,jpeg,png,txt,doc,docx' // 1MB Max
 
         ];
@@ -107,6 +111,7 @@ class DocumentoForm extends Component
             $this->documento->id_novedad=$this->id_novedad;
             //$this->documento->comentario='archivo: '.PATHINFO_FILENAME.'<br> '.$this->documento->comentario;
             $this->documento->comentario;
+            $this->documento->tipo_documento;
             $this->documento->save();
             $this->documento= new Documento;
 

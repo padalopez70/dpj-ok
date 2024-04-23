@@ -1,9 +1,13 @@
 <x-box-titulo titulo="Entidades">
 
+    {{-- @if (!Permisos::control(200)) --}}
+
+    @if (Permisos::control('202|203|1'))
         <x-button><a href="{{ route('sis.entidades.create') }}">Crear</a></x-button>
 
 
     <slot>
+        @endif
 
         <livewire:sistema.abm-entidad.entidades-tabla/>
 

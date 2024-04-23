@@ -61,12 +61,32 @@
                         </div>
                         <x-jet-input-error for="archivo" />
                     </div>
-
+<br>
                     <div class="col-span-6">
                         <x-jet-label for="archivo" value="Comentario" />
                         <x-jet-input wire:model.defer='documento.comentario' placeholder="Ingrese un comentario" type="text" class="text-dark w-full block" name="comentario" id="comentario"/>
                         <x-jet-input-error for="documento.comentario" />
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+<br>
+
+                    <x-jet-label for="tipo" value="Tipo de Documento" />
+                     <x-simple-select wire:model.defer="documento.tipo_documento"
+                         name="tipo_documento"
+                         id="tipo_documento"
+                         :options="$tipos_documentos"
+                         placeholder="Seleccionar tipo de documento"
+                         :searchable='true'
+                         value-field='id'
+                         text-field='denominacion_tipo_documento'
+                         class="form-select"
+
+                         />
+                     <x-jet-input-error for="documento.tipo_documento" />
+                 </div>
+
 
 
 {{--                     <div class="col-span-6">
@@ -82,7 +102,7 @@
                                 @if(strstr( $path, '.create' ))
                                 <x-jet-secondary-button wire:click="limpiarForm">Limpiar</x-jet-secondary-button>
                                 @endif
-                                <x-jet-button>Vincular</x-jet-button>
+                                <x-jet-button class="bg-primary">Vincular</x-jet-button>
                             </div>
                         </x-slot>
                     </div>

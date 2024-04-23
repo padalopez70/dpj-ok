@@ -12,8 +12,37 @@ use Illuminate\Http\Request;
 
 class Permisos
 {
-
     public function handle(Request $request, Closure $next, $permisos_requeridos)
+    {
+        //sin permiso sale
+        if(session('permisos') == null){
+            Session::flush();
+            auth()->forgetGuards();
+            return redirect()->route('login')->with('error', 'Sesión Caducada, vuelva a ingresar');
+        }
+
+        //si tiene algun pemiso control
+        else{
+            $permisos_requeridos = explode('|', $permisos_requeridos);
+            //if($permisos_requeridos[0] != 1)dd($permisos_requeridos);
+           // dd(session('permisos'));
+            foreach ($permisos_requeridos as $pereq) {
+                if(in_array($pereq,session('permisos')))
+                {
+                    return $next($request);
+                }
+                $permiso = Permiso::where('id', $pereq)->first();
+                $permisos_habilita[]=$permiso->nombre;
+            }
+
+            //si no hubo coincidencia envió error
+            return redirect()->route('prohibido')
+                ->with('prohibido_tipo','permisos')
+                ->with('permisos_habilita',$permisos_habilita);
+        }
+    }
+
+/*     public function handle(Request $request, Closure $next, $permisos_requeridos)
     {
         $permisos_requeridos = explode('|', $permisos_requeridos);
         //if($permisos_requeridos[0] != 1)dd($permisos_requeridos);
@@ -32,5 +61,5 @@ class Permisos
             ->with('prohibido_tipo','permisos')
             ->with('permisos_habilita',$permisos_habilita);
 
-    }
+    } */
 }

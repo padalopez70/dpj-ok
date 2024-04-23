@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Sistema\AbmDocumento;
 
 use App\Models\Documento;
+use App\Models\TipoDocumento;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 use Mediconesystems\LivewireDatatables\Column;
@@ -14,7 +15,7 @@ class DocumentosTabla extends LivewireDatatable
     protected $listeners = ['documentoEliminar', 'RefrescarDocumentos' =>' builder'];
 
 
-    //public $model = Producto::class;
+    public $universo_tipos = TipoDocumento::class;
     //public $hideable = 'select';
     //public $exportable = true;
     //public $sorteable = true;
@@ -36,6 +37,7 @@ class DocumentosTabla extends LivewireDatatable
         //$this->id_novedad = request('id_novedad');
          $this->filaNum = 0;
         return Documento::query()
+        ->leftJoin('tipo_documento AS u', 'u.id', 'documentos.tipo_documento')
         ->where('id_novedad', '=', $this->id_novedad)
         ->orderBy('documentos.id','DESC');
 
@@ -77,6 +79,13 @@ class DocumentosTabla extends LivewireDatatable
          ->searchable()
          ->view('_tbl.celda-principal')
          ->label('comentario'),
+
+         Column::name('u.denominacion_tipo_documento')
+         ->unsortable()
+         ->searchable()
+
+         ->view('_tbl.celda-principal')
+         ->label('tipo'),
 
          Column::callback(['id','path','comentario'], function ($id,$path, $comentario) {
 

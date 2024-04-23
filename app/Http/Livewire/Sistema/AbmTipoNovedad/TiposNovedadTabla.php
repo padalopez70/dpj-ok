@@ -72,6 +72,12 @@ class TiposNovedadTabla extends LivewireDatatable
                 ->view('_tbl.celda-principal')
                 ->label('Tipo de novedad'),
 
+                Column::name('genera_gde')
+                ->unsortable()
+                ->searchable()
+                ->view('_tbl.celda-genera_gde')
+                ->label('Genera GDE'),
+
                 /*
             Column::name('noticia')
                 ->unsortable()
