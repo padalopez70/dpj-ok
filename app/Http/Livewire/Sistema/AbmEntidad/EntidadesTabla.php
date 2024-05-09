@@ -179,6 +179,9 @@ class EntidadesTabla extends LivewireDatatable
                     'mostrar_doc_tipo' => 'vista',
                     'mostrar_docs' => 'sis.entidad.documentos.index',
 
+                    'mostrar_cargo_tipo' => 'vista',
+                    'mostrar_cargos' => 'sis.entidad.cargos.index',
+
                     'mostrar_info' => 'sis.documentos.index',
                     'mostrar_info_tipo' => 'vista',
                     'deleteTipo' => 'tabla',

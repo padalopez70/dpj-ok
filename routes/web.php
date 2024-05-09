@@ -26,6 +26,9 @@ use App\Http\Livewire\Sistema\AbmEntidad\EntidadForm;
 use App\Http\Livewire\Sistema\AbmEntidadDocumento\EntidadDocumentos;
 use App\Http\Livewire\Sistema\AbmEntidadDocumento\EntidadDocumentoForm;
 
+use App\Http\Livewire\Sistema\AbmEntidadCargo\EntidadCargos;
+use App\Http\Livewire\Sistema\AbmEntidadCargo\EntidadCargoForm;
+
 use App\Http\Livewire\Sistema\AbmTipo\Tipos;
 use App\Http\Livewire\Sistema\AbmTipo\TipoForm;
 
@@ -44,6 +47,9 @@ use App\Http\Livewire\Sistema\AbmTipoNovedad\TiposNovedad;
 
 use App\Http\Livewire\Sistema\AbmTipoDocumento\TipoDocumentoForm;
 use App\Http\Livewire\Sistema\AbmTipoDocumento\TiposDocumento;
+
+use App\Http\Livewire\Sistema\AbmCargo\CargoForm;
+use App\Http\Livewire\Sistema\AbmCargo\Cargo;
 
 use App\Http\Livewire\Sistema\AbmUsuario\Permisos;
 use App\Http\Livewire\Sistema\AbmUsuario\Usuario;
@@ -92,6 +98,11 @@ Route::middleware([
         //Entidades Docuemntos
         Route::get('/entidad_documentos/crear/{id}', EntidadDocumentos::class)->name('sis.entidad.documentos.create');
         Route::get('/entidad_documentos/{id}', EntidadDocumentos::class)->name('sis.entidad.documentos.index');
+
+        //Emtidades cargos
+        Route::get('/entidad_cargos/{id}', EntidadCargos::class)->name('sis.entidad.cargos.index');
+
+
 
         //Novedades Documentos
         Route::get('/documentos/crear/{id}', DocumentoForm::class)->name('sis.documentos.create');
@@ -143,6 +154,10 @@ Route::middleware([
         Route::get('/tiposdocumento/crear', TipoDocumentoForm::class)->name('sis.tiposdocumento.create');
         Route::get('/tiposdocumento/editar/{tipoDocumento}', TipoDocumentoForm::class)->name('sis.tiposdocumento.edit');
 
+      //Cargos
+      Route::get('/cargo', Cargo::class)->name('sis.cargo.index');
+      Route::get('/cargo/crear', CargoForm::class)->name('sis.cargo.create');
+      Route::get('/cargo/editar/{cargo}', CargoForm::class)->name('sis.cargo.edit');
 
         //Usuarios
         Route::get('/sistema/usuarios', Usuarios::class)->name('sis.abm-usuario.usuarios.index');
@@ -186,8 +201,13 @@ Route::middleware([
             //Route::get('/entidades/crear', EntidadForm::class)->name('sis.entidades.create');
             //Route::get('/entidades/editar/{entidad}', EntidadForm::class)->name('sis.entidades.edit');
 
+           //emtidades cargos
+           Route::get('/entidad_cargos/{id}', EntidadCargos::class)->name('sis.entidad.cargos.index');
+
            //emtidades documentos
            Route::get('/entidad_documentos/{id}', EntidadDocumentos::class)->name('sis.entidad.documentos.index');
+
+
 
             //Tipos
             Route::get('/tipos', Tipos::class)->name('sis.tipos.index');

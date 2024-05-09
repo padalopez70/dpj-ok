@@ -355,6 +355,10 @@ return [
                     'text' => 'Tipos de Documento',
                     'url'  => 'tiposdocumento',
                 ],
+                [
+                    'text' => 'Cargos',
+                    'url'  => 'cargo',
+                ],
 
             ],
         ],

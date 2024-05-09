@@ -52,8 +52,8 @@
     <!-- eliminar -->
 
     @if (isset($data['delete']))
-        @if($data['deleteTipo'] == 'tabla' && !Permisos::control(201))
-        <a title="ELIMINAR" href="#">
+        @if($data['deleteTipo'] == 'tabla' )
+        <a title="ELIMINAR CARGO" href="#">
             <x-ico2 name="trash" wire:click="confirmarEliminacion({{$data['id']}})"/>
         </a>
         @elseif($data['deleteTipo'] == 'vista')
@@ -68,3 +68,42 @@
     @endif
 
 </div>
+
+{{--
+</div>
+</div>
+
+<div>
+<div>
+
+
+
+<div class="table-row bg-success divide-x  p-1">
+    <div class="table-cell px-6 py-2 bg-info"> <span style=" width: 800px">hooola </span></div>
+    <div class="table-cell px-6 py-2 bg-danger"><span style=" width: 800px">hooola </span></div>
+    <div class="table-cell px-6 py-2 bg-primary "><span style=" width: 800px">hooola </span></div>
+    <div class="table-cell px-6 py-2 bg-primary "><span style=" width: 800px">hooola </span></div>
+    <div class="table-cell px-6 py-2 bg-primary "><span style=" width: 800px">hooola </span></div>
+    <div class="table-cell px-6 py-2 bg-primary "><span style=" width: 800px">hooola </span></div>
+    <div class="table-cell px-6 py-2 bg-primary "><span style=" width: 800px">hooola </span></div>
+
+ </div>
+ --}}
+
+
+
+
+
+
+
+{{--
+<div class="table-row bg-success col-1 p-1">
+    <div class="table-cell px-6 py-2 bg-info"> <span style=" width: 100px">hooola </span></div>
+    <div class="table-cell px-6 py-2 bg-danger"><span style=" width: 100px">hooola </span></div>
+    <div class="table-cell px-6 py-2 bg-primary "><span style=" width: 100px">hooola </span></div>
+
+ </div>
+ --}}
+
+
+

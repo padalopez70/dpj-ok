@@ -54,7 +54,7 @@
 
     @if (isset($data['mostrar_cargos']) && (Permisos::control('1|203|205') || Permisos::control(203) ))
     @if($data['mostrar_cargo_tipo'] == 'vista')
-    <a title="VER AUTORIDADES" href="{{route($data['mostrar_cargos'],$data['id'])}}"><i class="far fa-lg fa-user"></i>
+    <a title="VER AUTORIDADES" href="{{route($data['mostrar_cargos'],$data['id'])}}"><i class="far fa-lg fa-file"></i>
     </a>
     <!-- edicion modal -->
     @elseif($data['mostrar_cargo_tipo'] == 'modal')
@@ -159,7 +159,7 @@
 
 
     <!-- eliminar -->
-    @if (isset($data['delete']) && (Permisos::control('1|205')))
+    @if (isset($data['delete']) ))
         @if($data['deleteTipo'] == 'tabla')
         <a title="ELIMINAR" href="#">
             <x-ico2 name="trash" wire:click="confirmarEliminacion({{$data['id']}})"/>
