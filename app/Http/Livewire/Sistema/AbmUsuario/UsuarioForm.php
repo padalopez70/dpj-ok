@@ -64,7 +64,6 @@ class UsuarioForm extends Component
     {
 
         $this->validate();
-
         $clave = Str::random(8);
         $this->usuario->password = Hash::make($clave);
 
@@ -73,6 +72,7 @@ class UsuarioForm extends Component
             $this->usuario->save();
 
         } catch (Exception $e) {
+            //dd($e);
             $this->dispatchBrowserEvent('egral', ['errorNro' => $e->getCode()]);
         }
 

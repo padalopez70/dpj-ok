@@ -97,9 +97,7 @@ class EntidadCargoForm extends Component
             'entidad_cargo.nombre' => 'required',
             'entidad_cargo.cargo_id' => 'required',
             'entidad_cargo.fecha_asuncion' => 'required',
-            'entidad_cargo.dni' => 'required',
-            'entidad_cargo.celular' => 'required',
-            'entidad_cargo.email' => 'required'
+            'entidad_cargo.dni' => 'required'
             //'archivo' => 'max:2048|mimes:pdf,jpg,jpeg,png,txt,doc,docx' // 1MB Max
 
         ];

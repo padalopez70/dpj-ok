@@ -49,7 +49,8 @@
                                 @if($nuevo == true)
                                     <x-button2 wire:click="limpiarForm">Limpiar</x-jet-secondary-button></a>
                                 @endif
-                                <x-button>Guardar</x-jet-button>
+                                <x-jet-button>Guardar</x-jet-button>
+                                {{-- <x-button>Guardar</x-jet-button> --}}
                             </div>
                         </x-slot>
                     </div>
