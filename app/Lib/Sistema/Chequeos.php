@@ -216,11 +216,13 @@ $asamblea=0;
                 $es_tipificao=1;
                 }
 
-/*         if($registro)return true;
-        else return false; */
-        if($tipo_documento==1)return true;
+         if($registro)return true;
         else return false;
 
+        /*
+        if($tipo_documento==1)return true;
+        else return false;
+                */
 
     }
 

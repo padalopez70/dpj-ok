@@ -37,10 +37,13 @@ class NovedadesTabla extends LivewireDatatable
     {
         $this->filaNum = 0;
 
+        // FILTRO LAS NOVEDEADES QUE SEAN DISTINTAS DE SOLICITUD DE PERSONERIA JURIDICA
+        //Y DE SOCIEDADES ANONIMAS
         return Novedad::query()
             ->leftJoin('entidades AS u', 'u.id', 'novedades.id_entidad')
             ->leftJoin('novedades_tipo AS b', 'b.id', 'novedades.id_tipo_novedad')
             ->where('solicitud_pj', '=', 0)
+            ->where('id_tipo_novedad', '<>', 13)
           ->orderBy('novedades.id','DESC');
 
     }
