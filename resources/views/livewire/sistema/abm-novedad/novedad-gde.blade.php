@@ -59,19 +59,28 @@
                      </div>
                      <br>
 
+                     <div class="col-span-6">
+                        <x-jet-label for="titulo" value="GDE *" />
+
+                        <div class="flex space-x-1">
+                            <div class="w-full">
+                                <x-jet-input wire:model.defer='novedad.gde' type="text" name="gde" id="gde" class="w-full block" />
+                            </div>
+                            <div class="w-64 pt-2 text-right"><x-button wire:click="controlarGde()" wire:loading.attr="disabled">Verificar GDE</x-button></div>
+                        </div>
+                        <x-jet-input-error for="novedad.gde" />
+                    </div>
+
+                    <br>
+
                     <div class="col-span-6">
                         <x-jet-label for="titulo" value="Descripcion *" />
                         <x-jet-input wire:model.defer='novedad.novedad_descripcion' type="text" name="novedad" id="novedad"
                             class="w-full block" disabled />
                         <x-jet-input-error for="novedad.novedad_descripcion" />
                     </div>
-<br>
-                    <div class="col-span-6">
-                        <x-jet-label for="titulo" value="GDE *" />
-                        <x-jet-input wire:model.defer='novedad.gde' type="text" name="gde" id="gde"
-                            class="w-full block" />
-                        <x-jet-input-error for="novedad.gde" />
-                    </div>
+
+
 
 
 
@@ -81,7 +90,10 @@
                                 @if(strstr( $path, '.create' ))
                                 <x-jet-secondary-button wire:click="limpiarForm">Limpiar</x-jet-secondary-button>
                                 @endif
+
+                                @if($expedienteOk)
                                 <x-jet-button>Guardar</x-jet-button>
+                                @endif
                             </div>
                         </x-slot>
                     </div>

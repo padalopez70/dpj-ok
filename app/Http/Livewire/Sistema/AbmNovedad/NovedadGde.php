@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Sistema\AbmNovedad;
 
-
+use App\Lib\ApiGde;
 use App\Lib\Sistema\Chequeos;
 use App\Models\Novedad;
 use App\Models\Entidad;
@@ -13,6 +13,7 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class NovedadGde extends Component
@@ -21,6 +22,8 @@ class NovedadGde extends Component
     protected $listeners = ['entidadTraer'];
     public Novedad $novedad;
     public $puedo_cambiar_entidad="";
+    public $datosGde;
+    public $expedienteOk = false;
 
 
     public function render()
@@ -100,7 +103,15 @@ class NovedadGde extends Component
             'novedad.codigo' => 'required',
             'novedad.anio' => 'required',
             'novedad.fecha' => 'required',
-            'novedad.gde' => ''
+            'novedad.gde' => [
+                '',
+                Rule::unique('novedades', 'gde')->ignore($this->novedad),
+                function($attribute, $value, $fail) {
+                    if (!preg_match('/^EX-.*-GDESDE.*$/', $value)) {
+                        $fail('El N° GDE ingresado no es válido');
+                    }
+                }
+            ],
 
 
 
@@ -201,5 +212,33 @@ class NovedadGde extends Component
             $this->dispatchBrowserEvent('egral', ['errorNro' => $e->getCode()]);
             DB::rollBack();
         }
+    }
+
+
+    //VERIFICO GDE
+    public function controlarGde()
+    {
+        $this->resetErrorBag('novedad.gde'); //borra el mensaje de error
+        $this->novedad->gde = trim($this->novedad->gde); //espacio inicio y fin
+        $this->novedad->gde = preg_replace('/\s+/', ' ', $this->novedad->gde); //quito varios espacios en el centro
+
+        // $existe = Expediente::find($this->expediente->gde_nro);
+        // if($existe){
+        //     $this->addError('expediente.gde_nro', 'El Expediente ingresado ya existe en el sistema.');
+        //     return;
+        // }
+
+        try{
+            $api = new ApiGde();
+            $this->datosGde = $api->expediente($this->novedad->gde);
+        }
+        catch(Exception $e){
+            $this->expedienteOk = false;
+            $this->addError('novedad.gde', 'El Expediente no existe en el sistema GDE.');
+            return;
+            //$this->dispatchBrowserEvent('egral', ['html' => $e->getMessage()]);
+        }
+        $this->validateOnly('novededad.gde');
+        $this->expedienteOk = true;
     }
 }
